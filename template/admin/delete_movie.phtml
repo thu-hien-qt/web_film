@@ -1,0 +1,98 @@
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../asset/public.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<style>
+    .form {
+        width: 17em;
+        height: 3em;
+        border: 1px solid black;
+        border-radius: 20px;
+        margin: 3em auto;
+        padding: 0.5em;
+        font-size: 20px;
+        background-color: white;
+        
+    }
+
+    .select {
+        padding:0 3em;
+    }
+
+    .button {
+        padding: 0.5 1em;
+        text-align: center;
+        float: left;
+        margin: 0 2em;
+        margin-top: 1em;
+    }
+
+    .button:hover {
+        background-color: blue;
+    }
+
+    .clear {
+        clear: both;
+    }
+</style>
+
+<body>
+<div class="active">
+        <div class="hd">
+            <div class="icon">
+                <a href="movie_web.php"><img class="icon" src="https://w7.pngwing.com/pngs/130/1021/png-transparent-movie-logo-movie-logo-film-tape-cinema.png" alt=""></a>
+            </div>
+
+            <div>
+                <div class="user">
+                    <?php
+                    if (isset($_SESSION["name"])) {
+                        echo '<span class= "name">' . $_SESSION["name"] . '</span>';
+                        echo '<a href="..index.php"><span class ="log">Log out</span></a>';
+                    } else {
+                        echo '<a href="log.php"><span class = "log">Log in</span></a>';
+                    } ?>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="home_page">
+            <div class="genres">
+                <a href="index.php">Trang chủ</a>
+            </div>
+
+            
+            <?php
+            while ($row1 = $statement1->fetch(PDO::FETCH_ASSOC)) {
+                echo ('<div class="genres">');
+                echo ('<form method="post"><input type="hidden" ');
+                echo ('name="genre" value="' . $row1['name'] . '">' . "\n");
+                echo ('<button class="genre_button" type="submit" >'.$row1['name'] .'</button>');
+                echo ("\n</form></div>\n");
+            }
+
+            ?>
+            <div class="clear"></div>
+        </div>
+</div>
+</body>
+
+</html>
+<div class="form">
+<form method="post">
+    <div>If you want to delete <?php if (isset($_SESSION["delete"])) { echo $_SESSION["delete"];
+                                 }?> :</div>
+    <div class="select">
+        <div><button class="button" type="submit" name="no">No</button></div>
+        <div><button class="button" type="submit" name="yes">Yes</button></div>
+        <div class="clear"></div>
+    </div>
+</form>
+<div class="clear"></div>
+</div>

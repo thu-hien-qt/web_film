@@ -1,0 +1,118 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../asset/public.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<style>
+    .update_form {
+        background-color: white;
+        padding: 1em;
+        border-radius: 20px;
+        margin: auto;
+        margin-top: 1em;
+        max-width: 1120px;
+        
+    }
+
+
+</style>
+
+<body>
+    <div class="active">
+        <div class="hd">
+            <div class="icon">
+                <a href="movie_web.php"><img class="icon" src="https://w7.pngwing.com/pngs/130/1021/png-transparent-movie-logo-movie-logo-film-tape-cinema.png" alt=""></a>
+            </div>
+
+            <div>
+                <div class="user">
+                    <?php
+                    if (isset($_SESSION["name"])) {
+                        echo '<span class= "name">' . $_SESSION["name"] . '</span>';
+                        echo '<a href="..index.php"><span class ="log">Log out</span></a>';
+                    } else {
+                        echo '<a href="log.php"><span class = "log">Log in</span></a>';
+                    } ?>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="home_page">
+            <div class="genres">
+                <a href="index.php">Trang chủ</a>
+            </div>
+
+           
+            <?php
+            while ($row4 = $statement4->fetch(PDO::FETCH_ASSOC)) {
+                echo ('<div class="genres">');
+                echo ('<form method="post"><input type="hidden" ');
+                echo ('name="genre" value="' . $row4['name'] . '">' . "\n");
+                echo ('<button class="genre_button" type="submit" >'.$row4['name'] .'</button>');
+                echo ("\n</form></div>\n");
+            }
+
+            ?>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="update_form">
+    <h1>Update Film</h1>
+    <form method="post">
+        <p>Title: 
+            <label for="director"></label>
+            <select name="title" id="director" value=" <?php echo $row5['title'] ?>">
+                <?php
+                 echo '<option value ="' . $row5["title"].'>'. $row3["name"] . '</option>';
+                ?>
+            </select>?></p>
+
+        <p>Genre:
+            <?php
+            while ($row5 = $statement4->fetch(PDO::FETCH_ASSOC)) {
+                $checked = strpos($row5["genres"], $row5["name"]) !== false ? 'checked' : '';
+                echo '<label for="' . $row5["name"] . '">' . $row5["name"] . '</label>';
+                echo '<input type="checkbox" name="genres[]" id="' . $row5["name"] . '" value="' . $row5["genreID"] . '" ' . $checked . '>';
+            }
+            ?>
+        </p>
+
+        <p>Manufacture of year:<input type="year" name="manufacture" value="<?php echo $row5['manufacture'] ?>"></p>
+        <p>Director:
+            <label for="director"></label>
+            <select name="director" id="director" value=" <?php echo $row5['director'] ?>">
+                <?php
+                while ($row3 = $statement3->fetch(PDO::FETCH_ASSOC)) {
+                    if ($row3["name"] == $row5["director"]) {
+                        $val = '" selected >';
+                    } else {
+                        $val = '">';
+                    }
+                    echo '<option value ="' . $row3["personID"] . $val . $row3["name"] . '</option>';
+                }
+                unset($val);
+                ?>
+            </select>
+        </p>
+
+        <p>Actors:
+        <?php
+            while ($row2 = $statement2->fetch(PDO::FETCH_ASSOC)) {
+                $checked = strpos($row5["actors"], $row2["name"]) !== false ? 'checked' : '';
+                echo '<label for="' . $row2["name"] . '">' . $row2["name"] . '</label>';
+                echo '<input type="checkbox" name="actors[]" id="' . $row2["name"] . '" value="' . $row2["personID"] . '" ' . $checked . '>';
+            }
+            ?>
+
+        </p>
+        <p>Link: <input type="url" name="link" value="<?php echo $row5['link'] ?>"></p>
+        <p><label for="des">Description:</label></p>
+        <textarea name="description" id="des" > <?php echo $row5['description'] ?></textarea>
+        <p><input type="submit" name="update" value="Update" /></p>
+    </form>
+    </div>
+</body>
