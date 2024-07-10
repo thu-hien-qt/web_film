@@ -7,17 +7,14 @@ if (isset($_SESSION['genre'])) {
     $genre = $_SESSION['genre'];
     unset($_SESSION["genre"]);
     $sql = "SELECT 
-film.filmID,
-film.title,
-film.manufacture, 
-film.img
-FROM 
-film
-JOIN 
-film_genre ON film.filmID = film_genre.filmID
-JOIN 
-genres ON film_genre.genreID = genres.genreID
-WHERE genres.name = '$genre'";
+        film.filmID,
+        film.title,
+        film.manufacture, 
+        film.img
+        FROM film
+        JOIN film_genre ON film.filmID = film_genre.filmID
+        JOIN genres ON film_genre.genreID = genres.genreID
+        WHERE genres.name = '$genre'";
     $statement2 = $pdo->query($sql);
 }
 
