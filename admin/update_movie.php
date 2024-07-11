@@ -3,28 +3,27 @@
 require_once "../include/pdo.php";
 session_start();
 
-$statement1 = $pdo->query('SELECT filmID, title  FROM film');
-$statement2 = $pdo->query('SELECT personID, name FROM person WHERE `role` lIKE "actor"');
-$statement3 = $pdo->query('SELECT personID, name FROM person WHERE `role` lIKE "director"');
-$statement4 = $pdo->query('SELECT genreID, name  FROM genres');
-$statement5 = $pdo->query('SELECT genreID, name  FROM genres');
+$data_film = $pdo->query('SELECT filmID, title  FROM film');
+$actor = $pdo->query('SELECT personID, name FROM person WHERE `role` lIKE "actor"');
+$director = $pdo->query('SELECT personID, name FROM person WHERE `role` lIKE "director"');
+$genre1 = $pdo->query('SELECT genreID, name  FROM genres');
+$genre2 = $pdo->query('SELECT genreID, name  FROM genres');
 
-if (isset($_SESSION['filmID'])) {
-    $filmID = $_SESSION['filmID'];
+if (isset($_POST['filmID'])) {
+    $_SESSION["filmID"] = $_POST['filmID'];
 }
 
-if (isset($_SESSION['title'])) {
-    $title = $_SESSION['title'];
-    
-}
+$filmID = (isset($_SESSION["filmID"])) ? $_SESSION["filmID"] : null;
 
-$statement5 = $pdo->query("SELECT 
+if ($filmID){
+$stmt = $pdo->prepare("SELECT 
     film.filmID,
     film.title,
     GROUP_CONCAT(DISTINCT genres.name SEPARATOR ', ') AS genres, 
     film.manufacture, 
     D.name AS director, 
     GROUP_CONCAT(DISTINCT A.name SEPARATOR ', ') AS actors, 
+    film.img,
     film.link, 
     film.description 
 FROM 
@@ -39,20 +38,22 @@ JOIN
     film_actor ON film.filmID = film_actor.filmID
 JOIN 
     person A ON film_actor.actorID = A.personID
-WHERE film.filmID = $filmID
+WHERE film.filmID = :filmID
 GROUP BY 
     film.title, 
     film.manufacture, 
     film.link, 
     film.description;
 ");
-$row5 = $statement5->fetch(PDO::FETCH_ASSOC);
-
-
-if (isset($_POST['manufacture']) && isset($_POST['director']) && isset($_POST['link']) && isset($_POST['description'])) {
+$stmt->execute(array(':filmID'=>$filmID));
+$film = $stmt->fetch(PDO::FETCH_ASSOC);
+}
+if (isset($_POST['update'])) {
+if (isset($_POST['manufacture']) && isset($_POST['director']) && isset($_POST['img']) && isset($_POST['link']) && isset($_POST['description']) ) {
     $sqlf = "UPDATE film
         SET manufacture = :manufacture, 
             directorID = :directorID,
+            img = :img,
             link = :link,
             description = :description
         WHERE filmID = :filmID";
@@ -60,6 +61,7 @@ if (isset($_POST['manufacture']) && isset($_POST['director']) && isset($_POST['l
     $stmtf->execute(array(
         ':manufacture' => $_POST['manufacture'],
         ':directorID' => $_POST['director'],
+        ':img' => $_POST['img'],
         ':link' => $_POST['link'],
         ':description' => $_POST['description'],
         ':filmID' => $filmID
@@ -93,7 +95,7 @@ if (isset($_POST["genres"])) {
 
     foreach ($_POST["genres"] as $genreID) {
         $sql2 = "INSERT INTO film_genre (filmID, genreID)
-    VALUES (:filmID, :genreID)";
+            VALUES (:filmID, :genreID)";
 
         $stmt2 = $pdo->prepare($sql2);
         $stmt2->execute(array(
@@ -102,12 +104,9 @@ if (isset($_POST["genres"])) {
         ));
     }
 }
-
-
-if (isset($_POST['update'])) {
     $_SESSION['update'] = $_SESSION['title']. " updated";
     unset($_SESSION["title"]);
-    header("location: login.php");
+    header("location: index.php");
 }
 
 require_once '..\template\admin\update_movie.phtml';

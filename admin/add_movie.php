@@ -65,7 +65,7 @@ if (isset($_POST["actors"])) {
 }
  
 if (isset($_POST["addNew"])) {
-    header('location: login.php');
+    header('location: index.php');
 }
 
 require_once "../template/admin/add_movie.phtml";

@@ -21,9 +21,9 @@
                     if (isset($_SESSION["name"])) {
                         echo '<span class= "name">' . $_SESSION["name"] . '</span>';
                         unset($_SESSION["name"]);
-                        echo '<a href="admin\login.php"><span class ="log">Log out</span></a>';
+                        echo '<a href="admin\index.php"><span class ="log">Log out</span></a>';
                     } else {
-                        echo '<a href="log.php"><span class = "log">Log in</span></a>';
+                        echo '<a href="admin\login.php"><span class = "log">Log in</span></a>';
                     } ?>
                 </div>
             </div>
@@ -48,8 +48,8 @@
         </div>
         <div class="films">
             <?php
-            while ($row2 = $statement2->fetch(PDO::FETCH_ASSOC)) {
-                echo '<div class="movie"><a href="view.php"><img  src="' . $row2["img"] . '">';
+            foreach ($films as $row2) {
+                echo '<div class="movie"><a href="view.php?id='.$row2["filmID"].'"><img  src="' . $row2["img"] . '">';
                 echo '<div class="name">' . $row2["title"] . ' (' . $row2["manufacture"] . ') </div><div class="clear"></div></a><div class="clear"></div></div>'."\n";
             }
             ?>

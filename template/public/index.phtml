@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>phim</title>
     <link rel="stylesheet" type="text/css" href="asset\public.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
@@ -20,9 +20,9 @@
                     <?php
                     if (isset($_SESSION["name"])) {
                         echo '<span class= "name">' . $_SESSION["name"] . '</span>';
-                        echo '<a href="admin\login.php"><span class ="log">Log out</span></a>';
+                        echo '<a href="admin\index.php"><span class ="log">Log out</span></a>';
                     } else {
-                        echo '<a href="log.php"><span class = "log">Log in</span></a>';
+                        echo '<a href="admin\login.php"><span class = "log">Log in</span></a>';
                     } ?>
                 </div>
             </div>
@@ -47,8 +47,8 @@
         </div>
         <div class="films">
             <?php
-            while ($row2 = $statement2->fetch(PDO::FETCH_ASSOC)) {
-                echo '<div class="movie"><a href="view.php"><img  src="' . $row2["img"] . '">';
+            while ($row2 = $film->fetch(PDO::FETCH_ASSOC)) {
+                echo '<div class="movie"><a href="view.php?id='.$row2["filmID"].'"><img  src="' . $row2["img"] . '">';
                 echo '<div class="name">' . $row2["title"] . ' (' . $row2["manufacture"] . ') </div><div class="clear"></div></a><div class="clear"></div></div>'."\n";
             }
             ?>

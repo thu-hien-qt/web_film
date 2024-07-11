@@ -18,7 +18,6 @@
         
     }
 
-
 </style>
 
 <body>
@@ -35,7 +34,7 @@
                         echo '<span class= "name">' . $_SESSION["name"] . '</span>';
                         echo '<a href="..index.php"><span class ="log">Log out</span></a>';
                     } else {
-                        echo '<a href="log.php"><span class = "log">Log in</span></a>';
+                        echo '<a href="index.php"><span class = "log">Log in</span></a>';
                     } ?>
                 </div>
             </div>
@@ -48,11 +47,11 @@
 
            
             <?php
-            while ($row4 = $statement4->fetch(PDO::FETCH_ASSOC)) {
+            while ($row1 = $genre1->fetch(PDO::FETCH_ASSOC)) {
                 echo ('<div class="genres">');
                 echo ('<form method="post"><input type="hidden" ');
-                echo ('name="genre" value="' . $row4['name'] . '">' . "\n");
-                echo ('<button class="genre_button" type="submit" >'.$row4['name'] .'</button>');
+                echo ('name="genre" value="' . $row1['name'] . '">' . "\n");
+                echo ('<button class="genre_button" type="submit" >'.$row1['name'] .'</button>');
                 echo ("\n</form></div>\n");
             }
 
@@ -64,54 +63,56 @@
     <h1>Update Film</h1>
     <form method="post">
         <p>Title: 
-            <label for="director"></label>
-            <select name="title" id="director" value=" <?php echo $row5['title'] ?>">
-                <?php
-                 echo '<option value ="' . $row5["title"].'>'. $row3["name"] . '</option>';
+            <label for="film"></label>
+            <select name="filmID" id="film" onchange="this.form.submit()">
+            <?php
+                while ($row= $data_film->fetch(PDO::FETCH_ASSOC)) {
+                 $selected = ($row["filmID"] == $filmID) ? "selected" :"";
+                 echo '<option value ="' . $row["filmID"].'" '.$selected.' >'. $row["title"] . '</option>';
+                 unset ($selected);
+                }
                 ?>
-            </select>?></p>
+            </select>
+        </p>
 
         <p>Genre:
             <?php
-            while ($row5 = $statement4->fetch(PDO::FETCH_ASSOC)) {
-                $checked = strpos($row5["genres"], $row5["name"]) !== false ? 'checked' : '';
-                echo '<label for="' . $row5["name"] . '">' . $row5["name"] . '</label>';
-                echo '<input type="checkbox" name="genres[]" id="' . $row5["name"] . '" value="' . $row5["genreID"] . '" ' . $checked . '>';
+            while ($row2 = $genre2->fetch(PDO::FETCH_ASSOC)) {
+                $checked = strpos($film["genres"],$row2["name"]) !== false ? "checked" : "";
+                echo '<label for="' . $row2["name"] . '">' . $row2["name"] . '</label>';
+                echo '<input type="checkbox" name="genres[]" id="' . $row2["name"] . '" value="' . $row2["genreID"] . '" ' . $checked . '>';
+                unset($checked);
             }
             ?>
         </p>
 
-        <p>Manufacture of year:<input type="year" name="manufacture" value="<?php echo $row5['manufacture'] ?>"></p>
+        <p>Manufacture of year:<input type="year" name="manufacture" value="<?php echo $film['manufacture'] ?>"></p>
         <p>Director:
             <label for="director"></label>
-            <select name="director" id="director" value=" <?php echo $row5['director'] ?>">
+            <select name="director" id="director">
                 <?php
-                while ($row3 = $statement3->fetch(PDO::FETCH_ASSOC)) {
-                    if ($row3["name"] == $row5["director"]) {
-                        $val = '" selected >';
-                    } else {
-                        $val = '">';
-                    }
-                    echo '<option value ="' . $row3["personID"] . $val . $row3["name"] . '</option>';
+                while ($row3 = $director->fetch(PDO::FETCH_ASSOC)){
+                $selected = ($film["director"] == $row3["name"]) ?"selected":"";
+                echo '<option value ="' . $row3["personID"].'" ' . $selected .'>' . $row3["name"] . '</option>';
                 }
-                unset($val);
                 ?>
             </select>
         </p>
 
         <p>Actors:
         <?php
-            while ($row2 = $statement2->fetch(PDO::FETCH_ASSOC)) {
-                $checked = strpos($row5["actors"], $row2["name"]) !== false ? 'checked' : '';
-                echo '<label for="' . $row2["name"] . '">' . $row2["name"] . '</label>';
-                echo '<input type="checkbox" name="actors[]" id="' . $row2["name"] . '" value="' . $row2["personID"] . '" ' . $checked . '>';
+            while ($row4 = $actor->fetch(PDO::FETCH_ASSOC)) {
+                $checked = strpos($film["actors"], $row4["name"]) !== false ? 'checked' : '';
+                echo '<label for="' . $row4["name"] . '">' . $row4["name"] . '</label>';
+                echo '<input type="checkbox" name="actors[]" id="' . $row4["name"] . '" value="' . $row4["personID"] . '" ' . $checked . '>';
             }
             ?>
 
         </p>
-        <p>Link: <input type="url" name="link" value="<?php echo $row5['link'] ?>"></p>
+        <p>Img link: <input type="url" name="img" value="<?php echo $film['img'] ?>"></p>
+        <p>Link: <input type="url" name="link" value="<?php echo $film['link'] ?>"></p>
         <p><label for="des">Description:</label></p>
-        <textarea name="description" id="des" > <?php echo $row5['description'] ?></textarea>
+        <textarea name="description" id="des" ><?php echo $film['description'] ?></textarea>
         <p><input type="submit" name="update" value="Update" /></p>
     </form>
     </div>

@@ -1,47 +1,26 @@
-<?php 
-require_once "C:/xampp/htdocs/test/phim/include/pdo.php";
-$statement1 = $pdo->query('SELECT name FROM genres');
+<?php
+require_once "../include/pdo.php";
 session_start();
+$statement1 = $pdo->query('SELECT name FROM genres');
 
-if(! isset($_SESSION["name"])) {
-    header("location: ../index.php");
-}
+if (isset($_POST["username"]) && isset($_POST["password"])) {
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+    $query = "SELECT name FROM users WHERE username = :username AND password = :password";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute(array(
+        ':username' => $_POST["username"],
+        ':password' => $_POST["password"],
+    ));
+    $user= $stmt->fetch(PDO::FETCH_ASSOC);
+    var_dump($user);
+    if (empty($user)) {
+        echo "Incorrect password";
+    } else {
+    $_SESSION["name"] = $user["name"];
+    header("location:index.php");
+    }
+} 
+require_once '..\template\admin\login.phtml';
 
-if (isset($_POST['genre'])) {
-    $_SESSION["genre"] = $_POST["genre"];
-    header("location: list_movie.php");
-}
-
-if (isset($_POST["add"])) {
-    header("location: add_movie.php");
-    exit;
-}
-
-
-if (isset($_POST["update"])&& isset($_POST['filmID']) && isset($_POST["title"])) {
-    $_SESSION["title"] = $_POST["title"];
-    $_SESSION["filmID"] = $_POST["filmID"];
-    header("location: update_movie.php");
-    exit;
-}
-
-if (isset($_POST['delete'])  && isset($_POST['filmID']) && isset($_POST["title"])) {
-    $_SESSION["title"] = $_POST["title"];
-    $_SESSION["filmID"] = $_POST["filmID"];
-    header("location: delete_movie.php");
-    exit;
-}
-
-$statement2 = $pdo->query("SELECT 
-    film.filmID,
-    film.title,
-    film.manufacture, 
-    film.img
-FROM 
-    film
-");
-
-
-
-require_once 'C:\xampp\htdocs\test\phim\template\admin\login.phtml';
 ?>

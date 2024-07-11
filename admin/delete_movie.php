@@ -6,7 +6,7 @@ $statement1 = $pdo->query('SELECT name FROM genres');
 
 if (isset($_POST["no"])) {
     unset($_SESSION['delete']);
-    header("location: login.php");
+    header("location: index.php");
 }
 
 if (isset($_POST["yes"])) {

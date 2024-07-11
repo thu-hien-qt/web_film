@@ -1,0 +1,131 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>phim</title>
+    <link rel="stylesheet" type="text/css" href="asset\public.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<style>
+    .block1 {
+        width: 60%;
+        float: left;
+        margin: 3em;
+        margin-right: 1.5em;
+
+    }
+
+    .youtube iframe {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+
+    .youtube {
+        position: relative;
+        padding-bottom: 56.25%;
+        overflow: hidden;
+        max-width: 100%;
+        background: #000;
+    }
+
+    .describe {
+        margin-top: 4em;
+        width: 32%;
+        float: right;
+        padding-right: 1em;
+        box-sizing: border-box;
+        color: gainsboro;
+    }
+
+    .youtube_descrip {
+        border-radius: 10px;
+        background-color: rgb(30, 30, 30);
+        margin-top: 0.4em;
+    }
+
+    .relative {
+        border-top: 1px solid gainsboro;
+        font-size: 20px;
+        margin-top: 2em;
+        padding: 1em;
+        padding-bottom: 0px;
+        color: gainsboro;
+        text-transform: uppercase;
+    }
+
+    .fa-regular {
+        color: yellow;
+    }
+</style>
+
+<body>
+    <div class="active">
+        <div class="hd">
+            <div class="icon">
+                <a href="index.php"><img class="icon" src="https://w7.pngwing.com/pngs/130/1021/png-transparent-movie-logo-movie-logo-film-tape-cinema.png" alt=""></a>
+            </div>
+
+            <div>
+                <div class="user">
+                    <?php
+                    if (isset($_SESSION["name"])) {
+                        echo '<span class= "name">' . $_SESSION["name"] . '</span>';
+                        echo '<a href="admin\index.php"><span class ="log">Log out</span></a>';
+                    } else {
+                        echo '<a href="admin\login.php"><span class = "log">Log in</span></a>';
+                    } ?>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="home_page">
+            <div class="genres">
+                <a href="index.php">Trang chủ</a>
+            </div>
+
+            <?php
+            while ($row1 = $statement1->fetch(PDO::FETCH_ASSOC)) {
+                echo ('<div class="genres">');
+                echo ('<form method="post"><input type="hidden" ');
+                echo ('name="genre" value="' . $row1['name'] . '">' . "\n");
+                echo ('<button class="genre_button" type="submit" >' . $row1['name'] . '</button>');
+                echo ("\n</form></div>\n");
+            }
+
+            ?>
+            <div class="clear"></div>
+        </div>
+        <div class="youtube_descrip">
+            <div class="block1">
+                <div class="youtube">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/<?php echo $videoID ?>" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+            <div class="describe">
+                <h1><?php echo $film["title"] . ' (' . $film["manufacture"] . ') ' ?></h1>
+                <p>Director: <?php echo $film["director"] ?></p>
+                <p>Genres: <?php echo $film["genres"] ?></p>
+                <p>Actors: <?php echo $film["actors"] ?></p>
+                <p>Description: <?php echo $film["description"] ?></p>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="relative">
+            <i class="fa-regular fa-star"></i>
+            <span>Recommended movies</span>
+        </div>
+        <div class="films">
+            <?php
+            while ($row2 = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                echo '<div class="movie"><a href="view.php?id=' . $row2["filmID"] . '"><img  src="' . $row2["img"] . '">';
+                echo '<div class="name">' . $row2["title"] . ' (' . $row2["manufacture"] . ') </div><div class="clear"></div></a><div class="clear"></div></div>' . "\n";
+            }
+            ?>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>

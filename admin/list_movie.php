@@ -7,7 +7,14 @@ if(! isset($_SESSION["name"])) {
     header("location: ../index.php");
 }
 
-if ((isset($_POST['delete']) or isset($_POST['update'])) && isset($_POST['filmID']) && isset($_POST["title"])) {
+if (isset($_POST['update']) && isset($_POST['filmID']) && isset($_POST["title"])) {
+    $_SESSION["title"] = $_POST["title"];
+    $_SESSION["filmID"] = $_POST["filmID"];
+    header("location: update_movie.php");
+    exit;
+}
+
+if (isset($_POST['update']) && isset($_POST['filmID']) && isset($_POST["title"])) {
     $_SESSION["title"] = $_POST["title"];
     $_SESSION["filmID"] = $_POST["filmID"];
     header("location: delete_movie.php");
@@ -25,12 +32,6 @@ FROM
 
 if (isset($_POST["add"])) {
     header("location: add_movie.php");
-    exit;
-}
-
-
-if (isset($_POST["update"])) {
-    header("location: update_movie.php");
     exit;
 }
 

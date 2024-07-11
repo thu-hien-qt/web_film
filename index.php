@@ -1,10 +1,10 @@
 <?php 
-require_once "C:/xampp/htdocs/test/phim/include/pdo.php";
+require_once "include/pdo.php";
 $statement1 = $pdo->query('SELECT name FROM genres');
 session_start();
 unset($_SESSION["name"]);
 
-$statement2 = $pdo->query("SELECT 
+$film = $pdo->query("SELECT 
     film.filmID,
     film.title,
     film.manufacture, 
