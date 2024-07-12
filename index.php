@@ -9,8 +9,7 @@ $film = $pdo->query("SELECT
     film.title,
     film.manufacture, 
     film.img
-FROM 
-    film
+    FROM film
 ");
 
 if (isset($_POST['genre'])) {
