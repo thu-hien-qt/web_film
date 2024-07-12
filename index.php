@@ -4,6 +4,8 @@ $statement1 = $pdo->query('SELECT name FROM genres');
 session_start();
 unset($_SESSION["name"]);
 
+
+
 $film = $pdo->query("SELECT 
     film.filmID,
     film.title,

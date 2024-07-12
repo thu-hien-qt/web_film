@@ -119,7 +119,7 @@
         </div>
         <div class="films">
             <?php
-            while ($row2 = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            foreach ($relatedFilms as $row2) {
                 echo '<div class="movie"><a href="view.php?id=' . $row2["filmID"] . '"><img  src="' . $row2["img"] . '">';
                 echo '<div class="name">' . $row2["title"] . ' (' . $row2["manufacture"] . ') </div><div class="clear"></div></a><div class="clear"></div></div>' . "\n";
             }
