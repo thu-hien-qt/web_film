@@ -4,14 +4,7 @@ $statement1 = $pdo->query('SELECT name FROM genres');
 session_start();
 unset($_SESSION["name"]);
 
-$film = $pdo->query("SELECT 
-    film.filmID,
-    film.title,
-    film.manufacture, 
-    film.img
-FROM 
-    film
-");
+$film = $pdo->query("SELECT filmID, title, manufacture, img FROM film");
 
 if (isset($_POST['genre'])) {
     $_SESSION["genre"] = $_POST["genre"];
