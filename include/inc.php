@@ -2,10 +2,11 @@
 
 require_once "pdo.php";
 
-foreach (glob("./Model/*.php") as $file) {
+foreach (glob("include/Model/*.php") as $file) {
     require_once $file;
 }
 
-foreach (glob("./Repository/*.php") as $file) {
+$repos = glob("include/Repository/*.php");
+foreach ($repos as $file) {
     require_once $file;
 }
