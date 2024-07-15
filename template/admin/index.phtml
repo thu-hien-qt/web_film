@@ -1,0 +1,72 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="..\asset\admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+    <div class="active">
+        <div class="hd">
+            <div class="icon">
+                <a href="index.php"><img class="icon" src="https://w7.pngwing.com/pngs/130/1021/png-transparent-movie-logo-movie-logo-film-tape-cinema.png" alt=""></a>
+            </div>
+
+            <div>
+                <div class="user">
+                    <?php
+                    if (isset($_SESSION["name"])) {
+                        echo '<span class= "name">' . $_SESSION["name"] . '</span>';
+                        echo '<a href="admin\login.php"><span class ="log">Log out</span></a>';
+                    } else {
+                        echo '<a href="../log.php"><span class = "log">Log in</span></a>';
+                    } ?>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="home_page">
+            <div class="genres">
+                <a href="index.php">Trang chủ</a>
+            </div>
+
+            <?php
+            while ($row1 = $statement1->fetch(PDO::FETCH_ASSOC)) {
+                echo ('<div class="genres">');
+                echo ('<form method="post"><input type="hidden" ');
+                echo ('name="genre" value="' . $row1['name'] . '">' . "\n");
+                echo ('<button class="genre_button" type="submit" >'.$row1['name'] .'</button>');
+                echo ("\n</form></div>\n");
+            }
+
+            ?>
+             <form method="post">
+                <button class="add" type="submit" name="add">Add film</button>
+            </form>
+            <div class="clear"></div>
+        </div>
+        <div class="films">
+        <?php
+            while ($row2 = $statement2->fetch(PDO::FETCH_ASSOC)) {
+                echo '<div class="movie"><a href="view.php"><img  src="' . $row2["img"] . '">';
+                echo '<div class="name">' . $row2["title"] . ' (' . $row2["manufacture"] . ') </div><div class="clear"></div></a>' . "\n";
+                echo ('<form method="post"><input type="hidden" ');
+                echo ('name="filmID" value="' . $row2['filmID'] . '">' . "\n");
+                echo ('<input type="hidden" name="title" value = "' . $row2['title'] . '">' . "\n");
+                echo ('<button class="button" type="submit" name="update" >Update</button>');
+                echo ('<button class="button" type="submit" name="delete" >Delete</button>');
+                echo ("\n</form>\n");
+                echo '<div class="clear"></div></div>';
+            }
+            ?>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+</body>
+
+</html>

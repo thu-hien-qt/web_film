@@ -12,6 +12,15 @@ class Film
     private $img;
     private $description;
 
+    // public function __construct($data = null)
+    // {
+    //     $this->setFilmID($data->filmID);
+    //     $this->setTitle($data->title);
+    //     $this->setManufacture($data->manufacture);
+    //     $this->setImg($data->img);
+    //     $this->setLink($data->link);
+    // }
+
     public function getFilmID()
     {
         return $this->filmID;

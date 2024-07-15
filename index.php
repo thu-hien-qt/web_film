@@ -1,16 +1,12 @@
 <?php 
-require_once "include/pdo.php";
-$statement1 = $pdo->query('SELECT name FROM genres');
+require_once "include/inc.php";
 session_start();
 unset($_SESSION["name"]);
+$GenreRepo = new GenreRepository;
+$genres = $GenreRepo->getAll();
 
-$film = $pdo->query("SELECT 
-    film.filmID,
-    film.title,
-    film.manufacture, 
-    film.img
-    FROM film
-");
+$FilmRepo = new FilmRespository;
+$films = $FilmRepo->getAll();
 
 if (isset($_POST['genre'])) {
     $_SESSION["genre"] = $_POST["genre"];

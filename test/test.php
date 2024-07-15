@@ -50,8 +50,8 @@ include "../include/inc.php";
 // $PersonRepo->delete($Rio);
 
 $FIlmRepo = new FilmRespository();
-// $film = $FIlmRepo->getByFilmID(21);
-// print_r($film);
+$film = $FIlmRepo->getByFilmID(21);
+print_r($film);
 
 // $film = $FIlmRepo->getByFilmID(21);
 // $films = $FIlmRepo->getByFilm($film);
