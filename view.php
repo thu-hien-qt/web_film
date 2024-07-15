@@ -61,14 +61,28 @@ function getYouTubeID($url) {
 
 $videoID = getYouTubeID($url);
 
-$stmt = $pdo->query("SELECT 
+$genre = explode("," , $film["genres"]);
+var_dump($genre);
+$stmt = $pdo->prepare("SELECT 
     film.filmID,
     film.title,
+    GROUP_CONCAT(DISTINCT genres.name SEPARATOR ', ') AS genres, 
     film.manufacture, 
     film.img
 FROM 
     film
+JOIN 
+    film_genre ON film.filmID = film_genre.filmID
+JOIN 
+    genres ON film_genre.genreID = genres.genreID
+WHERE 
+    genres.name IN (:genres)
+GROUP BY film.filmID
+
 ");
+$stmt->execute(array(":genres" => $genre[0]));
+$relatedFilms = [];
+$relatedFilms = $stmt->fetch(PDO::FETCH_ASSOC);
 
 require_once "template/public/view.phtml"
 ?>
