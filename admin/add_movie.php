@@ -25,7 +25,6 @@ if (
         ':description' => $_POST['description'],
         ':img' => $_POST['img'],
     ));
-    echo $sql;
     $_SESSION["success"] = 'Film '. $_POST["title"] . ' added';
 }
 

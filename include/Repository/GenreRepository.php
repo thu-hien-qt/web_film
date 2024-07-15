@@ -1,4 +1,5 @@
 <?php
+ 
 
 class GenreRepository
 {
@@ -40,18 +41,28 @@ class GenreRepository
 
     public function insert(Genre $genre)
     {
-
+        $pdo = MyPDO::getInstance();
+        $query = 'INSERT INTO genres (name) VALUES (:genre)';
+        $stmt = $pdo->prepare($query);
+        $stmt->execute([":genre" => $genre->getName()]);
     }
 
     public function update(Genre $genre)
     {
-
+        $pdo = MyPDO::getInstance();
+        $query = 'UPDATE genres SET name = :name WHERE genreID = :genreID';
+        $stmt = $pdo->prepare($query);
+        $stmt->execute([':name'=> $genre->getName(),
+                        ':genreID' => $genre->getGenreID()]);
     }
 
 
     public function delete(Genre $genre)
     {
-
+        $pdo = MyPDO::getInstance();
+        $query = 'DELETE FROM genres WHERE genreID = :genreID';
+        $stmt = $pdo->prepare($query);
+        $stmt->execute([':genreID'=> $genre->getGenreID()]);
     }
 
 }
