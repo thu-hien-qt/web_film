@@ -2,17 +2,25 @@
 
 class UserReposiroty
 {
-    public function getUserbyID ($userID)
+    public function getUser($userName, $password)
     {
         $pdo = MyPDO::getInstance();
-        $query = "SELECT * FROM users WHERE userID = :userID";
+        $query = "SELECT * FROM users WHERE username = :username AND password = :password";
         $stmt = $pdo->prepare($query);
-        $stmt->execute([':userID' => $userID]);
+        $stmt->execute([
+            ':username' => $userName,
+            ':password' => $password
+        ]);
         $row = $stmt->fetchObject();
-        $user = new User();
-        $user->setUserID($row->userID);
-        $user->setName($row->name);
-        $user->setUserName($row->username);
-        $user->setPassword($row->password);
+        if (empty($row)) {
+            $user = null;
+        } else {
+            $user = new User();
+            $user->setUserID($row->userID);
+            $user->setName($row->name);
+            $user->setUserName($row->username);
+            $user->setPassword($row->password);
+        }
+        return $user;
     }
 }

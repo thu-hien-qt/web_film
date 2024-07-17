@@ -36,13 +36,12 @@
             <?php
             foreach ($genres as $genre) {
                 echo ('<div class="genres">');
-                echo ('<form method="post"><input type="hidden" ');
-                echo ('name="genre" value="' . $genre->getName() . '">' . "\n");
-                echo ('<button class="genre_button" type="submit" >'.$genre->getName() .'</button>');
-                echo ("\n</form></div>\n");
+                echo ('<a href="category.php?id='.$genre->getGenreID() .'">'. $genre->getName() . '</a>');
+                echo ("</div>\n");
             }
 
             ?>
+            <a href=""></a>
             <div class="clear"></div>
         </div>
         <div class="films">

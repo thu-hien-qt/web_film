@@ -50,8 +50,8 @@ include "../include/inc.php";
 // $PersonRepo->delete($Rio);
 
 $FIlmRepo = new FilmRespository();
-$film = $FIlmRepo->getByFilmID(21);
-print_r($film);
+// $film = $FIlmRepo->getByFilmID(21);
+// print_r($film);
 
 // $film = $FIlmRepo->getByFilmID(21);
 // $films = $FIlmRepo->getByFilm($film);
@@ -79,7 +79,10 @@ print_r($film);
 // $film->setDescription("abc123");
 // $FIlmRepo->Insert($film);
 
-// $film = $FIlmRepo->getByFilmID(25);
-// $FIlmRepo->Delete($film);
-
-
+$film = $FIlmRepo->getByFilmID(22);
+$PersonRepo = new PersonRepository;
+$actor1 = $PersonRepo->getPersonById(2);
+$actor2 = $PersonRepo->getPersonById(3);
+$film->addActor($actor1);
+$film->addActor($actor2);
+$FIlmRepo->Update($film);

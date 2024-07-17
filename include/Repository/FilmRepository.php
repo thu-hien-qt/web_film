@@ -5,70 +5,50 @@ class FilmRespository
     public function getByFilmID($filmID)
     {
         $pdo = MyPDO::getInstance();
-        $query = "SELECT 
-            film.filmID,
-            film.title,
-            GROUP_CONCAT(DISTINCT genres.name SEPARATOR ', ') AS genres, 
-            film.manufacture, 
-            D.name AS director, 
-            GROUP_CONCAT(DISTINCT A.name SEPARATOR ', ') AS actors, 
-            film.img,
-            film.link, 
-            film.description 
-            FROM 
-                film
-            JOIN 
-                film_genre ON film.filmID = film_genre.filmID
-            JOIN 
-                genres ON film_genre.genreID = genres.genreID
-            JOIN 
-                person D ON film.directorID = D.personID
-            JOIN 
-                film_actor ON film.filmID = film_actor.filmID
-            JOIN 
-                person A ON film_actor.actorID = A.personID
-            WHERE film.filmID = :filmID
-            GROUP BY 
-                film.title, 
-                film.manufacture, 
-                film.link, 
-                film.description";
+        $query = "SELECT * FROM film WHERE film.filmID = :filmID ";
         $stmt = $pdo->prepare($query);
         $stmt->execute(['filmID' => $filmID]);
-
         $row = $stmt->fetchObject();
 
-        if(!$row) {throw new Exception("Film $filmID is not found");
+        if (!$row) {
+            throw new Exception("Film $filmID is not found");
         }
 
-        $film = new Film;
-        $film->setFilmID($row->filmID);
-        $film->setTitle($row->title);
+        $film = new Film($row);
 
-        $genres = explode(', ', $row->genres);
-        foreach ($genres as $genreName) {
-            $genre = new Genre;
-            $genre->setName($genreName);
-            $film->addGenres($genre);
+        $sql1 = "SELECT person.personID, person.name, person.gender, person.birthday, person.role FROM person
+            JOIN film_actor ON film_actor.actorID = person.personID
+            JOIN film ON film.filmID = film_actor.filmID 
+            WHERE film.filmID = :filmID AND person.role = 'actor'";
+        $stmt1 = $pdo->prepare($sql1);
+        $stmt1->execute([":filmID" => $filmID]);
+        while ($row1 = $stmt1->fetchObject()) {
+            $person = new Person($row1);
+            $film->addActor($person);
         }
 
-        $film->setManufacture($row->manufacture);
 
-        $director = new Person;
-        $director->setName($row->director);
-        $film->adddirector($director);
-
-        $actors = explode(',', $row->actors);
-        foreach ($actors as $actorName)
-        {
-            $actor = new Person;
-            $actor->setName($actorName);
-            $film->addActors($actor);
+        $sql2 = "SELECT genres.genreID, genres.name FROM genres 
+                JOIN film_genre ON film_genre.genreID = genres.genreID
+                JOIN film ON film.filmID = film_genre.filmID
+                WHERE film.filmID = :filmID";
+        $stmt2 = $pdo->prepare($sql2);
+        $stmt2->execute([':filmID' => $filmID]);
+        while ($row2 = $stmt2->fetchObject()) {
+            $genre = new genre();
+            $genre->setGenreID($row2->genreID);
+            $genre->setName($row2->name);
+            $film->addGenre($genre);
         }
 
-        $film->setLink($row->link);
-        $film->setImg($row->img);
-        $film->setDescription($row->description);
+        $sql3 = "SELECT person.personID, person.name, person.gender, person.birthday, person.role FROM person 
+                JOIN film ON film.directorID = person.personID
+                WHERE film.filmID = :filmID";
+        $stmt3 = $pdo->prepare($sql3);
+        $stmt3->execute([':filmID' => $filmID]);
+        $row3 = $stmt3->fetchObject();
+        $director = new Person($row3);
+        $film->addDirector($director);
 
         return $film;
     }
@@ -76,73 +56,112 @@ class FilmRespository
     public function getAll()
     {
         $pdo = MyPDO::getInstance();
-        $query = "SELECT 
-            film.filmID,
-            film.title,
-            film.manufacture, 
-            film.img,
-            film.link
-            FROM film";
+        $query = "SELECT * FROM film";
         $stmt = $pdo->query($query);
 
         $films = [];
-        while ($row = $stmt->fetchObject())
-        {
-            $film = new Film();
-            $film->setFilmID($row->filmID);
-            $film->setTitle($row->title);
-            $film->setManufacture($row->manufacture);
-            $film->setImg($row->img);
-            $film->setLink($row->link);
+        while ($row = $stmt->fetchObject()) {
+            $film = new Film($row);
+
+            $sql1 = "SELECT person.personID, person.name, person.gender, person.birthday, person.role FROM person
+                    JOIN film_actor ON film_actor.actorID = person.personID
+                    JOIN film ON film.filmID = film_actor.filmID 
+                    WHERE film.filmID = :filmID AND person.role = 'actor'";
+            $stmt1 = $pdo->prepare($sql1);
+            $stmt1->execute([":filmID" => $row->filmID]);
+            while ($row1 = $stmt1->fetchObject()) {
+                $person = new Person($row1);
+                $film->addActor($person);
+            }
+
+            $sql2 = "SELECT genres.genreID, genres.name FROM genres 
+                    JOIN film_genre ON film_genre.genreID = genres.genreID
+                    JOIN film ON film.filmID = film_genre.filmID
+                    WHERE film.filmID = :filmID";
+            $stmt2 = $pdo->prepare($sql2);
+            $stmt2->execute([':filmID' => $row->filmID]);
+            while ($row2 = $stmt2->fetchObject()) {
+                $genre = new genre();
+                $genre->setGenreID($row2->genreID);
+                $genre->setName($row2->name);
+                $film->addGenre($genre);
+            }
+
+            $sql3 = "SELECT person.personID, person.name, person.gender, person.birthday, person.role FROM person 
+                    JOIN film ON film.directorID = person.personID
+                    WHERE film.filmID = :filmID";
+            $stmt3 = $pdo->prepare($sql3);
+            $stmt3->execute([':filmID' => $row->filmID]);
+            $row3 = $stmt3->fetchObject();
+            $director = new Person($row3);
+            $film->addDirector($director);
+
             $films[] = $film;
         }
         return $films;
-
     }
 
-    public function getByGenreID ($genreID)
+    public function getByGenreID($genreID)
     {
         $pdo = MyPDO::getInstance();
-        $query = "SELECT 
-            film.filmID,
-            film.title,
-            film.manufacture, 
-            film.img,
-            film.link
+        $query = "SELECT film.filmID, title, manufacture, img, link, description
             FROM film
             JOIN film_genre ON film_genre.filmID = film.filmID
             JOIN genres ON film_genre.genreID = genres.genreID
             WHERE genres.genreID = :genreID
             GROUP BY film.filmID";
         $stmt = $pdo->prepare($query);
-        $stmt->execute(['genreID'=>$genreID]);
+        $stmt->execute(['genreID' => $genreID]);
 
         $films = [];
-        while($row = $stmt->fetchObject())
-        {
-            $film = new film();
-            $film->setFilmID($row->filmID);
-            $film->setTitle($row->title);
-            $film->setManufacture($row->manufacture);
-            $film->setImg($row->img);
-            $film->setLink($row->link);
+        while ($row = $stmt->fetchObject()) {
+            $film = new film($row);
+
+            $sql1 = "SELECT person.personID, person.name, person.gender, person.birthday, person.role FROM person
+                    JOIN film_actor ON film_actor.actorID = person.personID
+                    JOIN film ON film.filmID = film_actor.filmID 
+                    WHERE film.filmID = :filmID AND person.role = 'actor'";
+            $stmt1 = $pdo->prepare($sql1);
+            $stmt1->execute([":filmID" => $row->filmID]);
+            while ($row1 = $stmt1->fetchObject()) {
+                $person = new Person($row1);
+                $film->addActor($person);
+            }
+
+            $sql2 = "SELECT genres.genreID, genres.name FROM genres 
+                    JOIN film_genre ON film_genre.genreID = genres.genreID
+                    JOIN film ON film.filmID = film_genre.filmID
+                    WHERE film.filmID = :filmID";
+            $stmt2 = $pdo->prepare($sql2);
+            $stmt2->execute([':filmID' => $row->filmID]);
+            while ($row2 = $stmt2->fetchObject()) {
+                $genre = new genre();
+                $genre->setGenreID($row2->genreID);
+                $genre->setName($row2->name);
+                $film->addGenre($genre);
+            }
+
+            $sql3 = "SELECT person.personID, person.name, person.gender, person.birthday, person.role FROM person 
+                    JOIN film ON film.directorID = person.personID
+                    WHERE film.filmID = :filmID";
+            $stmt3 = $pdo->prepare($sql3);
+            $stmt3->execute([':filmID' => $row->filmID]);
+            $row3 = $stmt3->fetchObject();
+            $director = new Person($row3);
+            $film->addDirector($director);
+
             $films[] = $film;
         }
         return $films;
     }
-    
-    public function getByFilm(Film $film)
+
+    public function getByGenreOfFilm(Film $film)
     {
         $filmID = $film->getFilmID();
         $pdo = MyPDO::getInstance();
 
 
-        $query =  "SELECT 
-        film.filmID,
-        film.title,
-        film.manufacture, 
-        film.img,
-        film.link
+        $query =  "SELECT film.filmID, title, manufacture, img, link, description
         FROM film
         JOIN film_genre ON film_genre.filmID = film.filmID
         JOIN genres ON film_genre.genreID = genres.genreID
@@ -155,19 +174,13 @@ class FilmRespository
         $stmt2 = $pdo->prepare($query);
         $stmt2->execute([':filmID' => $filmID]);
         $films = [];
-        while ($row = $stmt2->fetchObject())
-        {
-            $film = new Film();
-            $film->setFilmID($row->filmID);
-            $film->setTitle($row->title);
-            $film->setManufacture($row->manufacture);
-            $film->setImg($row->img);
-            $film->setLink($row->link);
+        while ($row = $stmt2->fetchObject()) {
+            $film = new Film($row);
             $films[] = $film;
         }
         return $films;
     }
-    
+
     public function Insert(Film $film)
     {
         $pdo = MyPDO::getInstance();
@@ -188,29 +201,29 @@ class FilmRespository
         $row = $statement->fetchObject();
         $filmID = $row->filmID;
 
-        foreach($film->getActors() as $actor)
-        {
+        foreach ($film->getActors() as $actor) {
             $query2 = "INSERT INTO film_actor (filmID, actorID) VALUES (:filmID, :actorID)";
             $stmt2 = $pdo->prepare($query2);
-            $stmt2->execute([':filmID' => $filmID,
-                             ':actorID' => $actor->getPersonID()]);
+            $stmt2->execute([
+                ':filmID' => $filmID,
+                ':actorID' => $actor->getPersonID()
+            ]);
         }
 
-        foreach ($film->getGenres() as $genre)
-        {
+        foreach ($film->getGenres() as $genre) {
             $query3 = "INSERT INTO film_genre (filmID, genreID) VALUES (:filmID, :genreID)";
             $stmt3 = $pdo->prepare($query3);
-            $stmt3->execute([':filmID' => $filmID,
-                            ':genreID' =>$genre->getGenreID()]);
-            
+            $stmt3->execute([
+                ':filmID' => $filmID,
+                ':genreID' => $genre->getGenreID()
+            ]);
         }
-
     }
 
     public function Delete(Film $film)
     {
         $pdo = MyPDO::getInstance();
-        
+
         $query2 = "DELETE FROM film_genre WHERE filmID = :filmID";
         $stmt2 = $pdo->prepare($query2);
         $stmt2->execute([':filmID' => $film->getFilmID()]);
@@ -222,7 +235,6 @@ class FilmRespository
         $query = "DELETE FROM film WHERE filmID = :filmID";
         $stmt = $pdo->prepare($query);
         $stmt->execute([':filmID' => $film->getFilmID()]);
-
     }
 
     public function Update(Film $film)
@@ -237,9 +249,11 @@ class FilmRespository
         $stmt3 = $pdo->prepare($query3);
         $stmt3->execute([':filmID' => $film->getFilmID()]);
 
-        $query = "UPDATE film SET title = :title, manufacture = :manufactor, directorID = :directorID, link = :link, description = :description, img = :img";
+        $query = "UPDATE film SET title = :title, manufacture = :manufacture, directorID = :directorID, link = :link, description = :description, img = :img
+                WHERE film = :filmID";
         $stmt = $pdo->prepare($query);
         $stmt->execute([
+            ':filmID' => $film->getFilmID(),
             ':title' => $film->getTitle(),
             ':manufacture' => $film->getManufacture(),
             ':directorID' => $film->getDirector()->getPersonID(),
@@ -248,23 +262,22 @@ class FilmRespository
             ':img' => $film->getImg()
         ]);
 
-        foreach($film->getActors() as $actor)
-        {
+        foreach ($film->getActors() as $actor) {
             $query2 = "INSERT INTO film_actor (filmID, actorID) VALUES (:filmID, :actorID)";
             $stmt2 = $pdo->prepare($query2);
-            $stmt2->execute([':filmID' => $film->getFilmID(),
-                             ':actorID' => $actor->getPersonID()]);
+            $stmt2->execute([
+                ':filmID' => $film->getFilmID(),
+                ':actorID' => $actor->getPersonID()
+            ]);
         }
 
-        foreach ($film->getGenres() as $genre)
-        {
+        foreach ($film->getGenres() as $genre) {
             $query3 = "INSERT INTO film_genre (filmID, genreID) VALUES (:filmID, :genreID)";
             $stmt3 = $pdo->prepare($query3);
-            $stmt3->execute([':filmID' => $film->getFilmID(),
-                            ':genreID' =>$genre->getGenreID()]);
-            
+            $stmt3->execute([
+                ':filmID' => $film->getFilmID(),
+                ':genreID' => $genre->getGenreID()
+            ]);
         }
-
     }
-
 }

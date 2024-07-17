@@ -1,6 +1,7 @@
 <?php
-require_once "C:/xampp/htdocs/test/phim/include/pdo.php";
-$statement1 = $pdo->query('SELECT name FROM genres');
+require_once "../include/inc.php";
+$GenreRepo = new GenreRepository;
+$genres = $GenreRepo->getAll();
 session_start();
 
 if(! isset($_SESSION["name"])) {
@@ -8,27 +9,16 @@ if(! isset($_SESSION["name"])) {
 }
 
 if (isset($_POST['update']) && isset($_POST['filmID']) && isset($_POST["title"])) {
-    $_SESSION["title"] = $_POST["title"];
     $_SESSION["filmID"] = $_POST["filmID"];
     header("location: update_movie.php");
     exit;
 }
 
-if (isset($_POST['update']) && isset($_POST['filmID']) && isset($_POST["title"])) {
-    $_SESSION["title"] = $_POST["title"];
+if (isset($_POST['delete']) && isset($_POST['filmID']) && isset($_POST["title"])) {
     $_SESSION["filmID"] = $_POST["filmID"];
     header("location: delete_movie.php");
     exit;
 }
-
-$statement2 = $pdo->query("SELECT 
-    film.filmID,
-    film.title,
-    film.manufacture, 
-    film.img
-FROM 
-    film
-");
 
 if (isset($_POST["add"])) {
     header("location: add_movie.php");
@@ -36,30 +26,12 @@ if (isset($_POST["add"])) {
 }
 
 
-if (isset($_SESSION['genre'])) {
-    $genre = $_SESSION['genre'];
-    unset($_SESSION["genre"]);
-    $sql = "SELECT 
-film.filmID,
-film.title,
-film.manufacture, 
-film.img
-FROM 
-film
-JOIN 
-film_genre ON film.filmID = film_genre.filmID
-JOIN 
-genres ON film_genre.genreID = genres.genreID
-WHERE genres.name = '$genre'";
-    $statement2 = $pdo->query($sql);
-}
-
-if (isset($_POST['genre'])) {
-    $_SESSION["genre"] = $_POST["genre"];
-    header("location: list_movie.php");
+if (isset($_GET['id'])) {
+    $genreID = $_GET['id'];
+    $FilmRepo = new FilmRespository;
+    $films = $FilmRepo->getByGenreID($genreID);
 }
 
 require_once '..\template\admin\list_movie.phtml';
 
 ?>
-1

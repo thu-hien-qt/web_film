@@ -1,24 +1,20 @@
 <?php
-require_once "../include/pdo.php";
+require_once "../include/inc.php";
 session_start();
-$statement1 = $pdo->query('SELECT name FROM genres');
+$GenreRepo = new GenreRepository;
+$genres = $GenreRepo->getAll();
 
 if (isset($_POST["username"]) && isset($_POST["password"])) {
-    $username = $_POST["username"];
+    $userName = $_POST["username"];
     $password = $_POST["password"];
-    $query = "SELECT name FROM users WHERE username = :username AND password = :password";
-    $stmt = $pdo->prepare($query);
-    $stmt->execute(array(
-        ':username' => $_POST["username"],
-        ':password' => $_POST["password"],
-    ));
-    $user= $stmt->fetch(PDO::FETCH_ASSOC);
-    var_dump($user);
+    $userRepo = new UserReposiroty;
+    $user = $userRepo->getUser($userName, $password);
+    
     if (empty($user)) {
-        echo "Incorrect password";
+        $error = "In correct password";
     } else {
-    $_SESSION["name"] = $user["name"];
-    header("location:index.php");
+        $_SESSION["name"] = $user->getName();
+        header("location:index.php");
     }
 } 
 require_once '..\template\admin\login.phtml';

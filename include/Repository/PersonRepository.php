@@ -11,13 +11,7 @@ class PersonRepository
         $actors = [];
         while ($row = $stmt->fetchObject()) 
         {
-            $actor= new Person();
-            $actor->setPersonID($row->personID);
-            $actor->setName($row->name);
-            $actor->setGender($row->gender);
-            $actor->setBirthday($row->birthday);
-
-            $actors[] = $actor;
+            $actors[] = new Person($row);
         }
         return $actors;
 
@@ -32,13 +26,7 @@ class PersonRepository
         $directors = [];
         while ($row = $stmt->fetchObject())
         {
-            $director = new Person();
-            $director->setPersonID($row->personID);
-            $director->setName($row->name);
-            $director->setGender($row->gender);
-            $director->setBirthday($row->birthday);
-
-            $directors[] = $director;
+            $directors[] = new Person($row);
         }
         return $directors;
     }
@@ -55,12 +43,7 @@ class PersonRepository
             throw new Exception("Person $personID not found");
         }
 
-        $person = new Person;
-        $person->setPersonID($row->personID);
-        $person->setName($row->name);
-        $person->setGender($row->gender);
-        $person->setBirthday($row->birthday);
-        
+        $person = new Person($row);
         return $person;
     }
 

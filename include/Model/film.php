@@ -1,6 +1,6 @@
 <?php
 
-class Film 
+class Film
 {
     private $filmID;
     private $title;
@@ -12,14 +12,17 @@ class Film
     private $img;
     private $description;
 
-    // public function __construct($data = null)
-    // {
-    //     $this->setFilmID($data->filmID);
-    //     $this->setTitle($data->title);
-    //     $this->setManufacture($data->manufacture);
-    //     $this->setImg($data->img);
-    //     $this->setLink($data->link);
-    // }
+    public function __construct($data = null)
+    {
+        if ($data) {
+            $this->setFilmID($data->filmID);
+            $this->setTitle($data->title);
+            $this->setManufacture($data->manufacture);
+            $this->setImg($data->img);
+            $this->setLink($data->link);
+            $this->setDescription($data->description);
+        }
+    }
 
     public function getFilmID()
     {
@@ -51,7 +54,7 @@ class Film
         $this->manufacture = $manufacture;
     }
 
-    public function addActors(Person $actor)
+    public function addActor(Person $actor)
     {
         $this->actors[] = $actor;
     }
@@ -66,7 +69,7 @@ class Film
     }
 
 
-    public function addGenres(Genre $genre)
+    public function addGenre(Genre $genre)
     {
         $this->genres[] = $genre;
     }

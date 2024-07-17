@@ -51,7 +51,7 @@ div a:visited {
     float: left;
     font-size: 1.5em;
     font-weight: 700;
-    padding: 0 0.2em;
+    padding: 0 0.5em;
     margin-top: 0.5em;
     
 
@@ -91,18 +91,6 @@ div a:visited {
 img {
     max-width: 100%;
     height: auto;
-}
-
-.genre_button {
-    background-color:rgb(52, 52, 52);
-    border:0cap solid ;
-    font-size: 22px;
-    color: white;
-    font-family: 'Times New Roman', Times, serif;
-}
-
-.genre_button:hover {
-    color: green;
 }
 
 form {

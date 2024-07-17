@@ -21,11 +21,11 @@
             <div class="genre">
                 <a href="index.php">Trang chủ</a>
             </div>
-
             <?php
-            while ($row = $statement1->fetch(PDO::FETCH_ASSOC)) {
-                echo ' <div class="genre">
-            <a href="http:#//"><span>' . $row["name"] . '</span></a></div>';
+            foreach ($genres as $genre) {
+                echo ('<div class="genre">');
+                echo ('<a href="list_movie.php?id=' . $genre->getGenreID() . '">' . $genre->getName() . '</a>');
+                echo ("</div>\n");
             }
 
             ?>
@@ -34,39 +34,34 @@
     </div>
 </body>
 
-    <div id="body">
-        <div class="formm">
-            <form method="post">
-                <div>
-                    <div class="form">
-                        <input class="distan" type="text" name="username" placeholder="Username" aria-label="Username">
-                    </div>
-                    <div class="form">
-                        <input class="distan" type="password" name="password" placeholder="Password" aria-label="password">
-                    </div>
-                </div>
-                <div class="form">
-                    <button class="distan submit" type="submit" name="submit"> <b>LOG IN</b></button>
-                </div>
-                <div>
-                    <?php
-                    if (isset($_SESSION["error"])) {
-                        echo ('<p style="color:red">' . $_SESSION["error"] . "</p>\n");
-                        unset($_SESSION["error"]);
-                    }
 
-                    if (isset($_SESSION["success"])) {
-                        echo ('<p style="color:green">' . $_SESSION["success"] . "</p>\n");
-                        unset($_SESSION["success"]);
-                    }
-                    ?>
-                </div>
-                <div class="clear"></div>
-                
-            </form>
+<div class="formm">
+    <form method="post">
+        <div>
+            <div class="form">
+                <input class="distan" type="text" name="username" placeholder="Username" aria-label="Username">
+            </div>
+            <div class="form">
+                <input class="distan" type="password" name="password" placeholder="Password" aria-label="password">
+            </div>
         </div>
+        <div class="form">
+            <button class="distan submit" type="submit" name="submit"> <b>LOG IN</b></button>
+        </div>
+        <div>
+            <?php
+            if (isset($error)) {
+                echo ('<p style="color:red">' . $error . "</p>\n");
+                unset($error);
+            }
+            ?>
+        </div>
+        <a href="sign_in.php" class ="sign">Create a new account</a>
+        <div class="clear"></div>
 
-    </div>
-</body>
+    </form>
+</div>
+
+
 
 </html>

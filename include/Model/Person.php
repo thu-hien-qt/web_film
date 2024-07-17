@@ -7,7 +7,17 @@ class Person {
     private $birthday;
     private $role;
 
-    
+    public function __construct($data = null)
+    {
+        if ($data) 
+        {
+            $this->setPersonID($data->personID);
+            $this->setName($data->name);
+            $this->setGender($data->gender);
+            $this->setBirthday($data->birthday);
+            $this->setRole($data->role);
+        }
+    }
 
     public function getPersonID()
     {
