@@ -250,7 +250,7 @@ class FilmRespository
         $stmt3->execute([':filmID' => $film->getFilmID()]);
 
         $query = "UPDATE film SET title = :title, manufacture = :manufacture, directorID = :directorID, link = :link, description = :description, img = :img
-                WHERE film = :filmID";
+                WHERE film.filmID = :filmID";
         $stmt = $pdo->prepare($query);
         $stmt->execute([
             ':filmID' => $film->getFilmID(),

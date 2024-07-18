@@ -9,7 +9,10 @@ $filmID = (isset($_GET["id"])) ? $_GET["id"] : null;
 if ($filmID) {
     $FilmRepo = new FilmRespository;
     $film = $FilmRepo->getByFilmID($filmID);
+    $filmRelatives = $FilmRepo->getByGenreOfFilm($film);
 }
+
+
 
 $url = $film->getLink();
 function getYouTubeID($url) {

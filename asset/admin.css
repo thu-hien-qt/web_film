@@ -1,5 +1,4 @@
 body {
-    background-color: rgb(52, 52, 52);
     padding: 0 1em;
 }
 
@@ -22,12 +21,12 @@ div a:hover {
 }
 
 div a:link {
-    color: white;
+    color: rgb(53, 41, 149);
     text-decoration: none;
 }
 
 div a:visited {
-    color: white;
+    color: rgb(0, 0, 0);
 }
 
 .icon {
@@ -47,7 +46,7 @@ div a:visited {
     font-size: 20px;
 }
 
-.genres {
+.main {
     float: left;
     font-size: 1.5em;
     font-weight: 700;
@@ -56,6 +55,21 @@ div a:visited {
     
 
 }
+
+table, td, th, tr {
+    border: solid 1px ;
+    border-collapse: collapse;
+    margin: auto;
+}
+
+.table {
+    margin: 3em;
+}
+
+table a:hover {
+    color: blue;
+}
+
 
 .name {
     color: white;
@@ -78,19 +92,9 @@ div a:visited {
 }
 
 .home_page {
-    border-bottom: 0.5px solid rgb(130, 127, 127);
-}
-
-.movie {
-   width: 100%;
-   max-width: 10rem;
-   margin: 2em 1em;
-   float:inline-start;
-}
-
-img {
-    max-width: 100%;
-    height: auto;
+    background-color: rgb(106, 106, 106);
+    border-bottom: 0.5px solid rgb(16, 16, 16);
+    margin-bottom: 2em;
 }
 
 form {
@@ -98,7 +102,8 @@ form {
 }
 
 .button {
-    margin: 0.5em;
+    margin: 0.5em 0;
+    margin-left: 0.5em;
     padding: 0 0.5em;
 }
 
@@ -110,7 +115,14 @@ form {
     margin-top: 1em;
 }
 
-form {
-    margin: 0em;
+.inform {
+    margin-bottom: 2em;
+    font-weight: bold;
+    font-size: 20px;
+    color: red;
 }
 
+.user a:link {
+    color: white !important;
+
+}

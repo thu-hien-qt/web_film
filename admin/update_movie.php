@@ -12,13 +12,8 @@ $PersonRepo = new PersonRepository;
 $actors = $PersonRepo->getActor();
 $directors = $PersonRepo->getDirector();
 
-if (isset($_POST['filmID'])) {
-    $_SESSION["filmID"] = $_POST['filmID'];
-}
-
-$filmID = (isset($_SESSION["filmID"])) ? $_SESSION["filmID"] : null;
-
-if ($filmID) {
+if (isset($_GET["id"])) {
+    $filmID = $_GET["id"];
     $FilmRepo = new FilmRespository;
     $film = $FilmRepo->getByFilmID($filmID);
 }
@@ -27,36 +22,37 @@ $error = "";
 
 if (isset($_POST["update"])) {
     if (
-        empty($_POST["manufacture"]) OR empty($_POST["link"])
-        OR empty($_POST["img"]) OR empty($_POST["description"]) OR empty($_POST["director"])
-        OR empty($_POST["actors"]) OR empty($_POST["genres"])
-    ) { echo "haha";
+        empty($_POST["title"]) || empty($_POST["manufacture"]) || empty($_POST["link"])
+        || empty($_POST["img"]) || empty($_POST["description"]) || empty($_POST["director"])
+        || empty($_POST["actors"]) || empty($_POST["genres"])
+    ) { 
         $error = "Please complete all information.";
     } else {
-        $newFilm = new Film();
-        $newFilm->setTitle($film->getTitle());
-        $newFilm->setManufacture($_POST["manufacture"]);
-        $newFilm->setLink($_POST["link"]);
-        $newFilm->setImg($_POST["img"]);
-        $newFilm->setDescription($_POST["description"]);
 
+        $film->setTitle($film->getTitle());
+        $film->setManufacture($_POST["manufacture"]);
+        $film->setLink($_POST["link"]);
+        $film->setImg($_POST["img"]);
+        $film->setDescription($_POST["description"]);
+        $film->removeDirector();
         $director = $PersonRepo->getPersonById($_POST["director"]);
-        $NewFilm->addDirector($director);
+        $film->addDirector($director);
 
+        $film->removeAllActor();
         foreach ($_POST["actors"] as $actorID) {
             $actor = $PersonRepo->getPersonById($actorID);
-            $newFilm->addActor($actor);
+            $film->addActor($actor);
         }
 
+        $film->removeAllGenre();
         foreach ($_POST["genres"] as $genreID) {
             $genre = $GenreRepo->getById($genreID);
-            $newFilm->addGenre($genre);
+            $film->addGenre($genre);
         }
-        print_r($newFilm);
-        // $FilmRepo = new FilmRespository;
-        // $FilmRepo->Update($film);
-        // $_SESSION["update"] = $film->getTitle(). " updated";
-        // header("location: index.php");
+        $FilmRepo = new FilmRespository;
+        $FilmRepo->Update($film);
+        $_SESSION["update"] = $film->getTitle(). " updated";
+        header("location: index.php");
     } 
 } 
    

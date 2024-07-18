@@ -133,15 +133,15 @@
             <i class="fa-regular fa-star"></i>
             <span>Recommended movies</span>
         </div>
-        <!-- <div class="films">
+        <div class="films">
             <?php
-            foreach ($relatedFilms as $row2) {
-                echo '<div class="movie"><a href="view.php?id=' . $row2["filmID"] . '"><img  src="' . $row2["img"] . '">';
-                echo '<div class="name">' . $row2["title"] . ' (' . $row2["manufacture"] . ') </div><div class="clear"></div></a><div class="clear"></div></div>' . "\n";
+            foreach ($filmRelatives as $row2) {
+                echo '<div class="movie"><a href="view.php?id=' . $row2->getFilmID() . '"><img  src="' . $row2->getImg() . '">';
+                echo '<div class="name">' . $row2->getTitle() . ' (' . $row2->getManufacture() . ') </div><div class="clear"></div></a><div class="clear"></div></div>' . "\n";
             }
             ?>
             <div class="clear"></div>
-        </div> -->
+        </div>
         <div class="clear"></div>
     </div>
 </body>

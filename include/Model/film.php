@@ -68,10 +68,19 @@ class Film
         return $actors;
     }
 
+    public function removeAllActor()
+    {
+        $this->actors = [];
+    }
 
     public function addGenre(Genre $genre)
     {
         $this->genres[] = $genre;
+    }
+
+    public function removeAllGenre()
+    {
+        $this->genres = [];
     }
 
     public function getGenres()
@@ -86,6 +95,11 @@ class Film
     public function addDirector(Person $director)
     {
         $this->director = $director;
+    }
+
+    public function removeDirector()
+    {
+        $this->director = null;
     }
 
     public function getDirector()

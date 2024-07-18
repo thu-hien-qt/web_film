@@ -49,7 +49,7 @@ include "../include/inc.php";
 // $Rio = $PersonRepo->getPersonById(15);
 // $PersonRepo->delete($Rio);
 
-$FIlmRepo = new FilmRespository();
+// $FIlmRepo = new FilmRespository();
 // $film = $FIlmRepo->getByFilmID(21);
 // print_r($film);
 
@@ -79,10 +79,18 @@ $FIlmRepo = new FilmRespository();
 // $film->setDescription("abc123");
 // $FIlmRepo->Insert($film);
 
-$film = $FIlmRepo->getByFilmID(22);
-$PersonRepo = new PersonRepository;
-$actor1 = $PersonRepo->getPersonById(2);
-$actor2 = $PersonRepo->getPersonById(3);
-$film->addActor($actor1);
-$film->addActor($actor2);
-$FIlmRepo->Update($film);
+// $film = $FIlmRepo->getByFilmID(26);
+// $PersonRepo = new PersonRepository;
+// $actor1 = $PersonRepo->getPersonById(2);
+// $actor2 = $PersonRepo->getPersonById(3);
+// $film->addActor($actor1);
+// $film->addActor($actor2);
+// $film->removeAllActor();
+// print_r($film);
+
+$gerneRepo = new GenreRepository;
+// $genre = new Genre;
+$genre = $gerneRepo->getById(10);
+// $genre->setName("haha");
+// echo $gerneRepo->insert($genre);
+$gerneRepo->delete($genre);

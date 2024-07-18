@@ -2,6 +2,21 @@
 
 class PersonRepository 
 {
+    public function getAll()
+    {
+        $pdo = MyPDO::getInstance();
+        $query = 'SELECT * FROM person';
+        $stmt = $pdo->query($query);
+
+        $people = [];
+        while ($row = $stmt->fetchObject()) 
+        {
+            $people[] = new Person($row);
+        }
+        return $people;
+
+    }
+
     public function getActor()
     {
         $pdo = MyPDO::getInstance();

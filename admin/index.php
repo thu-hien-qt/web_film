@@ -7,7 +7,6 @@ $genres = $GenreRepo->getAll();
 $FilmRepo = new FilmRespository;
 $films = $FilmRepo->getAll();
 
-
 if(! isset($_SESSION["name"])) {
     header("location: ../index.php");
 } 

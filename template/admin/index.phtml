@@ -29,42 +29,53 @@
             <div class="clear"></div>
         </div>
         <div class="home_page">
-            <div class="genres">
+            <div class="main">
                 <a href="index.php">Trang chủ</a>
             </div>
-          
-            <?php
-            foreach ($genres as $genre) {
-                echo ('<div class="genres">');
-                echo ('<a href="list_movie.php?id='.$genre->getGenreID() .'">'. $genre->getName() . '</a>');
-                echo ("</div>\n");
-            }
-
-            ?>
+            <div class="main"><a href="list_movie.php?id=1 ">Genre</a></div>
+            <div class="main"><a href="list_movie.php?id=2">Person</a></div>
+            <div class="main"><a href="list_movie.php?id=3">User</a></div>
             <form method="post">
                 <button class="add" type="submit" name="add">Add film</button>
             </form>
             <div class="clear"></div>
         </div>
-        <div> 
+        <div class="inform"> 
             <?php if (isset($_SESSION["update"])) { echo $_SESSION["update"]; unset($_SESSION["update"]);}
                 if (isset($_SESSION["delete"])) { echo $_SESSION["delete"]; unset ($_SESSION["delete"]);}
             ?>
         </div>
         <div class="films">
             <?php
+            echo '<table><tr><th>Title</th><th>Manufacture</th><th>Genres</th><th>Actors</th><th>Director</th><th>Img link</th><th>Link</th><th>Description</th><th></th></tr>';
             foreach ($films as $film) {
-                echo '<div class="movie"><a href="view.php"><img  src="' . $film->getImg() . '">';
-                echo '<div class="name">' . $film->getTitle() . ' (' . $film->getManufacture() . ') </div><div class="clear"></div></a>' . "\n";
-                echo ('<form method="post"><input type="hidden" ');
-                echo ('name="filmID" value="' . $film->getFilmID() . '">' . "\n");
-                echo ('<button class="button" type="submit" name="update" >Update</button>');
-                echo ('<button class="button" type="submit" name="delete" >Delete</button>');
-                echo ("\n</form>\n");
-                echo '<div class="clear"></div></div>';
+                
+                echo '<tr><td>'.$film->getTitle().'</td>';
+                echo '<td>'.$film->getManufacture().'</td><td>';
+                $genres = [];
+                foreach ($film->getGenres() as $genre)
+                {
+                    $genres[] = $genre->getName();
+                }
+                echo implode(", ",$genres).'</td><td>';
+                $actors = [];
+                foreach ($film->getActors() as $actor)
+                {
+                    $actors[] = $actor->getName();
+                }
+                echo implode(", ",$actors).'</td><td>';
+                echo $film->getDirector()->getName().'</td><td>';
+                echo '<a href="'.$film->getImg().'">Img</a></td><td>';
+                echo '<a href="'.$film->getLink().'">Link</a></td><td>';
+                echo $film->getDescription().'</td><td>';
+                echo ('<a href="update_movie.php?id='.$film->getFilmID().'"><button class="button" type="submit">Update</button></a>');
+                echo ('<a href="delete_movie.php?id='.$film->getFilmID().'"><button class="button" type="submit">Delete</button></a>');
+                echo ("\n</td></tr>\n");
             }
+            echo '</table>';
             ?>
             <div class="clear"></div>
+            
         </div>
         <div class="clear"></div>
     </div>

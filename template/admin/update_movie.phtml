@@ -15,9 +15,8 @@
         margin: auto;
         margin-top: 1em;
         max-width: 1120px;
-        
-    }
 
+    }
 </style>
 
 <body>
@@ -48,7 +47,7 @@
             <?php
             foreach ($genres as $genre) {
                 echo ('<div class="genres">');
-                echo ('<a href="list_movie.php?id='.$genre->getGenreID() .'">'. $genre->getName() . '</a>');
+                echo ('<a href="list_movie.php?id=' . $genre->getGenreID() . '">' . $genre->getName() . '</a>');
                 echo ("</div>\n");
             }
 
@@ -57,80 +56,64 @@
         </div>
     </div>
     <div class="update_form">
-    <h1>Update Film</h1>
-    <form method="post">
-        <p>Title: 
-            <label for="film"></label>
-            <select name="filmID" id="film" onchange="this.form.submit()">
-            <?php
-                foreach ($films as $val) {
-                 $selected = ($val->getFilmID() == $film->getFilmID()) ? "selected" :"";
-                 echo '<option value ="' . $val->getFilmID().'" '.$selected.' >'. $val->getTitle() . '</option>';
-                 unset ($selected);
-                }
-                ?>
-            </select>
-        </p>
+        <h1>Update Film</h1>
+        <form method="post">
+            <p>Title:
+                <input type="text" value="<?php echo $film->getTitle()?>" name="title">
+            </p>
 
-        <p>Genre:
-            <?php
-            foreach ($genres as $gen) {
-                foreach ($film->getGenres() as $genre)
-                {
-                    if ($gen->getGenreID() == $genre->getGenreID()) {
-                        $checked = "checked";
-                        break;
-                    } else {
-                        $checked = "";
-                    }
-
-                }
-                echo '<label for="' . $gen->getName() . '">' . $gen->getName(). '</label>';
-                echo '<input type="checkbox" name="genres[]" id="' .$gen->getName() . '" value="' .$gen->getGenreID() . '" ' . $checked . '>';
-                unset($checked);
-            }
-            ?>
-        </p>
-
-        <p>Manufacture of year:<input type="year" name="manufacture" value="<?php echo $film->getManufacture()?>"></p>
-
-        <p>Director:
-            <label for="director"></label>
-            <select name="director" id="director">
+            <p>Genre:
                 <?php
-                foreach ($directors as $director)
-                {
-                    $selected = ($director->getPersonID() == $film->getDirector()->getPersonID()) ? "selected" : "";
-                    echo '<option value ="' . $director->getPersonID().'" ' . $selected .'>' . $director->getName(). '</option>';
+                foreach ($genres as $gen) {
+                    $checked = "";
+                    foreach ($film->getGenres() as $genre) {
+                        if ($gen->getGenreID() == $genre->getGenreID()) {
+                            $checked = "checked";
+                            break;
+                        }
+                    }
+                    echo '<label for="' . $gen->getName() . '">' . $gen->getName() . '</label>';
+                    echo '<input type="checkbox" name="genres[]" id="' . $gen->getName() . '" value="' . $gen->getGenreID() . '" ' . $checked . '>';
+                    unset($checked);
                 }
                 ?>
-            </select>
-        </p>
+            </p>
 
-        <p>Actors:
-        <?php
-           foreach ($actors as $val)
-           {
-               foreach ($film->getActors() as $actor)
-               {
-                   if ($val->getPersonID() == $actor->getPersonID()){
-                       $checked = "checked";
-                       break;
-                   } else {
-                       $checked = "";
-                   }
-               }
-                echo '<label for="' . $val->getPersonID() . '">' . $val->getName() . '</label>';
-                echo '<input type="checkbox" name="actors[]" id="' . $val->getPersonID(). '" value="' .$val->getPersonID(). '" ' . $checked . '>';
-            }
-            ?>
+            <p>Manufacture of year:<input type="year" name="manufacture" value="<?php echo $film->getManufacture() ?>"></p>
 
-        </p>
-        <p>Img link: <input type="url" name="img" value="<?php echo $film->getImg() ?>"></p>
-        <p>Link: <input type="url" name="link" value="<?php echo $film->getLink() ?>"></p>
-        <p><label for="des">Description:</label></p>
-        <textarea name="description" id="des" ><?php echo $film->getDescription() ?></textarea>
-        <p><input type="submit" name="update" value="Update" /></p>
-    </form>
+            <p>Director:
+                <label for="director"></label>
+                <select name="director" id="director">
+                    <?php
+                    foreach ($directors as $director) {
+                        $selected = ($director->getPersonID() == $film->getDirector()->getPersonID()) ? "selected" : "";
+                        echo '<option value ="' . $director->getPersonID() . '" ' . $selected . '>' . $director->getName() . '</option>';
+                    }
+                    ?>
+                </select>
+            </p>
+
+            <p>Actors:
+                <?php
+                foreach ($actors as $val) {
+                    $checked = "";
+                    foreach ($film->getActors() as $actor) {
+                        if ($val->getPersonID() == $actor->getPersonID()) {
+                            $checked = "checked";
+                            break;
+                        }
+                    }
+                    echo '<label for="' . $val->getPersonID() . '">' . $val->getName() . '</label>';
+                    echo '<input type="checkbox" name="actors[]" id="' . $val->getPersonID() . '" value="' . $val->getPersonID() . '" ' . $checked . '>';
+                }
+                ?>
+
+            </p>
+            <p>Img link: <input type="url" name="img" value="<?php echo $film->getImg() ?>"></p>
+            <p>Link: <input type="url" name="link" value="<?php echo $film->getLink() ?>"></p>
+            <p><label for="des">Description:</label></p>
+            <textarea name="description" id="des"><?php echo $film->getDescription() ?></textarea>
+            <p><input type="submit" name="update" value="Update" /></p>
+        </form>
     </div>
 </body>

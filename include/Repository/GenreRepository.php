@@ -45,6 +45,8 @@ class GenreRepository
         $query = 'INSERT INTO genres (name) VALUES (:genre)';
         $stmt = $pdo->prepare($query);
         $stmt->execute([":genre" => $genre->getName()]);
+        $genreID = $pdo->lastInsertId();
+        return $genreID;
     }
 
     public function update(Genre $genre)
