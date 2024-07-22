@@ -181,7 +181,7 @@ class FilmRespository
         return $films;
     }
 
-    public function Insert(Film $film)
+    public function insert(Film $film)
     {
         $pdo = MyPDO::getInstance();
         $query = "INSERT INTO film  (title, manufacture, directorID, link, description, img) VALUES (:title, :manufacture, :directorID, :link, :description, :img)";
@@ -195,11 +195,7 @@ class FilmRespository
             ':img' => $film->getImg()
         ]);
 
-        $sql = "SELECT filmID FROM film WHERE title = :title";
-        $statement = $pdo->prepare($sql);
-        $statement->execute([':title' => $film->getTitle()]);
-        $row = $statement->fetchObject();
-        $filmID = $row->filmID;
+        $filmID = $pdo->lastInsertId();
 
         foreach ($film->getActors() as $actor) {
             $query2 = "INSERT INTO film_actor (filmID, actorID) VALUES (:filmID, :actorID)";
@@ -220,7 +216,7 @@ class FilmRespository
         }
     }
 
-    public function Delete(Film $film)
+    public function delete(Film $film)
     {
         $pdo = MyPDO::getInstance();
 
@@ -237,7 +233,7 @@ class FilmRespository
         $stmt->execute([':filmID' => $film->getFilmID()]);
     }
 
-    public function Update(Film $film)
+    public function update(Film $film)
     {
         $pdo = MyPDO::getInstance();
 

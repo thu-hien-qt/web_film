@@ -92,3 +92,33 @@ img {
 form {
     margin: 0em;
 }
+
+.comment {
+    background-color: rgb(33, 32, 32);
+    border-radius: 10px;
+    margin-top: 1em;
+}
+
+.h2 {
+    padding: 0.5em 1em;
+    color: rgb(240, 237, 237) !important;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#comment-text {
+    width: 93%;
+    max-width: 1060px;
+    height: 2em;
+    border-radius: 8px;
+    margin:0 0 1em 1em;
+    float: left;
+}
+
+.submit-comment {
+    margin-bottom: 0.5 em;
+    margin-right: 0.3em;
+    float: right;
+    width: 3%;
+}
+

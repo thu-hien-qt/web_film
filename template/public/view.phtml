@@ -88,7 +88,7 @@
             <?php
             foreach ($genres as $genre) {
                 echo ('<div class="genres">');
-                echo ('<a href="category.php?id='.$genre->getGenreID() .'">'. $genre->getName() . '</a>');
+                echo ('<a href="category.php?id=' . $genre->getGenreID() . '">' . $genre->getName() . '</a>');
                 echo ("</div>\n");
             }
 
@@ -102,32 +102,43 @@
                 </div>
             </div>
             <div class="describe">
-                <h1><?php echo $film->getTitle(). ' (' . $film->getManufacture() . ') ' ?></h1>
+                <h1><?php echo $film->getTitle() . ' (' . $film->getManufacture() . ') ' ?></h1>
                 <p>Director: <?php echo $film->getDirector()->getName() ?></p>
-                <p>Genres: 
-                    <?php 
-                        $genres =[];
-                        foreach ($film->getGenres() as $genre)
-                        {
-                            $genres[] = $genre->getName();
-                        }
+                <p>Genres:
+                    <?php
+                    $genres = [];
+                    foreach ($film->getGenres() as $genre) {
+                        $genres[] = $genre->getName();
+                    }
 
-                        echo $result_g = implode(", ", $genres);
+                    echo $result_g = implode(", ", $genres);
                     ?>
                 </p>
-                <p>Actors: 
-                    <?php 
-                        $actors =[];
-                        foreach ($film->getActors() as $actor)
-                        {
-                            $actors[] = $actor->getName();
-                        }
+                <p>Actors:
+                    <?php
+                    $actors = [];
+                    foreach ($film->getActors() as $actor) {
+                        $actors[] = $actor->getName();
+                    }
 
-                        echo $result_a = implode(", ", $actors);
-                        ?>
+                    echo $result_a = implode(", ", $actors);
+                    ?>
                 <p>Description: <?php echo $film->getDescription() ?></p>
             </div>
             <div class="clear"></div>
+        </div>
+        <div class="comment">
+            <div class="h2">
+                <div>Comment</div>
+            </div>
+            <form id="comment-form">
+                <textarea id="comment-text" placeholder="Write your comment here"></textarea>
+                <input type="hidden" name="filmID" value="<?php echo $_GET["id"]; ?>">
+                <button type="button" id="submit-comment">Send</button>
+            </form>
+            <div id="comments-section"></div>
+
+            <script src="..\phim\asset\public.js"></script>
         </div>
         <div class="relative">
             <i class="fa-regular fa-star"></i>
