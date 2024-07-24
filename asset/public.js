@@ -1,69 +1,58 @@
-document.addEventListener('DOMContentLoaded', function () {
-    loadComments();
-
-    document.getElementById('submit-comment').addEventListener('click', function () {
-        var commentText = document.getElementById('comment-text').value.trim();
-        var filmID = document.querySelector('input[name="filmID"]').value;
-
-        if (commentText === "") {
-            alert("Comment cannot be empty!");
-            return;
-        }
-
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "../phim/manage/submit_comment.php", true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                var response = JSON.parse(xhr.responseText);
-                if (response.status === 'success') {
-                    loadComments();
-                    document.getElementById('comment-text').value = "";
-                } else {
-                    alert("Failed to submit comment: " + response.message);
-                }
-
-            } else {
-                alert("Failed to submit comment. Status: " + xhr.status);
-            }
-        };
-
-        xhr.onerror = function () {
-            alert("Request failed.");
-        };
-
-        xhr.send("comment=" + encodeURIComponent(commentText) + "&filmID=" + encodeURIComponent(filmID));
-    });
-});
 
 function loadComments() {
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "../phim/manage/get_comment.php", true);
-
-    xhr.onload = function () {
-        if (xhr.status === 200) {
-            try {
-                var comments = JSON.parse(xhr.responseText);
-                var commentsSection = document.getElementById('comments-section');
-                commentsSection.innerHTML = "";
-                comments.forEach(function (comment) {
-                    var div = document.createElement('div');
-                    div.textContent = comment.comment + " (" + comment.datetime + ")";
-                    commentsSection.appendChild(div);
-                });
-            } catch (e) {
-                console.error('Failed to parse JSON response:', e);
-                alert("Failed to load comments.");
-            }
-        } else {
-            alert("Failed to load comments. Status: " + xhr.status);
+    $.getJSON('../phim/admin/comment/get_comment.php', function (rows) {
+        $('#comments-section').empty();
+        for (i = 0; i < rows.length; i++) {
+            let row = rows[i];
+            $('#comments-section').append(
+                `<div class="user_comment">
+                    <img src="http:#" alt="img" class="user_icon">
+                    <div class="cmt_main">
+                        <div class="cmt_info"><span class="user_name_comment">user_name</span>
+                        <span>${row.datetime}</span></div>
+                        <div><span> ${row.comment}</span></div>
+                    </div>
+                    <div class="clear"></div>
+                </div>`);
         }
-    };
+        return;
+    })
 
-    xhr.onerror = function () {
-        alert("Request failed.");
-    };
 
-    xhr.send();
 }
+$(document).ready(function () {
+    loadComments()
+    $('#comment-form').submit(function (event) {
+        event.preventDefault();
+        postComment();
+    })
+});
+
+function postComment() {
+    let filmID = $('#filmID').val();
+    console.log(filmID);
+    let comment = $('#comment-text').val();
+    console.log(comment);
+    $.ajax({
+        url: '../phim/admin/comment/post_comment.php',
+        type: 'POST',
+        data: {
+            filmID: filmID,
+            comment: comment
+        },
+        success: function (response) {
+            let res = JSON.parse(response);
+            if (res.status === 'success') {
+                loadComments();
+                $('#comment-text').val(''); 
+            } else {
+                alert('Error: ' + res.message);
+            }
+        }
+    })
+    console.log("23");
+
+}
+
+
+

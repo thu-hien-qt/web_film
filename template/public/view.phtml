@@ -62,6 +62,7 @@
 </style>
 
 <body>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <div class="active">
         <div class="hd">
             <div class="icon">
@@ -127,18 +128,20 @@
             </div>
             <div class="clear"></div>
         </div>
-        <div class="comment">
-            <div class="h2">
-                <div>Comment</div>
+        <div>
+            <div class="comment">
+                <div class="h2">
+                    <div>Comment</div>
+                </div>
+                <form id="comment-form">
+                    <textarea id="comment-text" placeholder="Write your comment here"></textarea>
+                    <input type="hidden" id="filmID" value="<?php echo $_GET["id"]; ?>">
+                    <button id="submit-comment">Send</button>
+                </form>
             </div>
-            <form id="comment-form">
-                <textarea id="comment-text" placeholder="Write your comment here"></textarea>
-                <input type="hidden" name="filmID" value="<?php echo $_GET["id"]; ?>">
-                <button type="button" id="submit-comment">Send</button>
-            </form>
             <div id="comments-section"></div>
-
-            <script src="..\phim\asset\public.js"></script>
+            <script src="../phim/asset/public.js"></script>
+            <div class="clear"></div>
         </div>
         <div class="relative">
             <i class="fa-regular fa-star"></i>

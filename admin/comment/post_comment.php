@@ -1,12 +1,11 @@
 <?php
-require_once "..\include\inc.php";
+require 'C:\xampp\htdocs\test\phim\include\inc.php';
 
-$commentRepo = new CommentRepo();
+$commentRepo = new CommentRepository();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $filmID = $_POST['filmID'];
     $commentText = $_POST['comment'];
-
     $cmt = new Comment();
     $cmt->setFilmID($filmID);
     $cmt->setComment($commentText);

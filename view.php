@@ -13,7 +13,6 @@ if ($filmID) {
 }
 
 
-
 $url = $film->getLink();
 function getYouTubeID($url) {
     $urlComponents = parse_url($url);
@@ -28,7 +27,7 @@ function getYouTubeID($url) {
         return $queryParams['v'];
     }
 
-    return null; 
+return null; 
 }
 
 $videoID = getYouTubeID($url);

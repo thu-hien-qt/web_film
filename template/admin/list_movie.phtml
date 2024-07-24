@@ -32,11 +32,11 @@
             <div class="main">
                 <a href="index.php">Trang chủ</a>
             </div>
-            <div class="main"><a href="list_movie.php?id=1 ">Genre</a></div>
-            <div class="main"><a href="list_movie.php?id=2">Person</a></div>
-            <div class="main"><a href="list_movie.php?id=3">User</a></div>
+            <div class="main"><a href="list_movie.php?address=genre">Genre</a></div>
+            <div class="main"><a href="list_movie.php?address=person">Person</a></div>
+            <div class="main"><a href="list_movie.php?address=user">User</a></div>
 
-            <a href="../manage/add.php?id=<?php echo $_GET["id"]?>"><button class="add" type="submit">Add</button></a>
+            <a href="<?php echo '../admin/'.$_GET["address"].'/add_'.$_GET["address"].'.php'?>"><button class="add" type="submit">Add</button></a>
             <div class="clear"></div>
         </div>
         <div>
@@ -57,8 +57,8 @@
                 foreach ($genres as $genre) {
                     echo '<tr><td>' . $genre->getGenreID() . '</td><td>';
                     echo $genre->getName() . '</td><td>';
-                    echo ('<a href="..\manage\update.php?genreID='. $genre->getGenreID() . '"><button class="button" type="submit">Update</button></a>');
-                    echo ('<a href="..\manage\delete.php?genreID='. $genre->getGenreID() . '"><button class="button" type="submit">Delete</button></a>');
+                    echo ('<a href="..\admin\genre\update_genre.php?genreID='. $genre->getGenreID() . '"><button class="button" type="submit">Update</button></a>');
+                    echo ('<a href="..\admin\genre\delete_genre.php?genreID='. $genre->getGenreID() . '"><button class="button" type="submit">Delete</button></a>');
                     echo '</td></tr>';
                 }
                 echo '</table>';
@@ -70,8 +70,8 @@
                     echo $person->getGender() . '</td><td>';
                     echo $person->getBirthday() . '</td><td>';
                     echo $person->getRole() . '</td><td>';
-                    echo ('<a href="..\manage\update.php?personID='. $person->getPersonID() . '"><button class="button" type="submit">Update</button></a>');
-                    echo ('<a href="..\manage\delete.php?personID='. $person->getPersonID() . '"><button class="button" type="submit">Delete</button></a>');
+                    echo ('<a href="..\admin\person\update_person.php?personID='. $person->getPersonID() . '"><button class="button" type="submit">Update</button></a>');
+                    echo ('<a href="..\admin\person\delete_person.php?personID='. $person->getPersonID() . '"><button class="button" type="submit">Delete</button></a>');
                     echo '</td></tr>';
                 }
                 echo '</table>';
@@ -81,8 +81,8 @@
                     echo '<tr><td>' . $user->getUserID() . '</td><td>';
                     echo $user->getName() . '</td><td>';
                     echo $user->getUserName() . '</td><td>';
-                    echo ('<a href="..\manage\update.php?userID=' . $user->getUserID(). '"><button class="button" type="submit">Update</button></a>');
-                    echo ('<a href="..\manage\delete.php?userID=' . $user->getUserID(). '"><button class="button" type="submit">Delete</button></a>');
+                    echo ('<a href="..\admin\user\update_user.php?userID=' . $user->getUserID(). '"><button class="button" type="submit">Update</button></a>');
+                    echo ('<a href="..\admin\user\delete_user.php?userID=' . $user->getUserID(). '"><button class="button" type="submit">Delete</button></a>');
                     echo '</td></tr>';
                 }
                 echo '</table>';

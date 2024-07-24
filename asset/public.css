@@ -97,6 +97,7 @@ form {
     background-color: rgb(33, 32, 32);
     border-radius: 10px;
     margin-top: 1em;
+    padding-bottom: 1em;
 }
 
 .h2 {
@@ -121,4 +122,34 @@ form {
     float: right;
     width: 3%;
 }
+
+#comments-section {
+    margin-top: 1em;
+    color: white;
+}
+
+.user_icon {
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+    float: left;
+}
+
+.user_comment {
+    padding: 0.5em;
+    margin: 0.5em 0;
+    background-color: rgb(23, 23, 23);
+    border-radius: 10px;
+}
+
+.cmt_info {
+    margin-bottom: 0.3em;
+}
+
+.cmt_main {
+    width: 95%;
+    float: right;
+}
+
+
 
