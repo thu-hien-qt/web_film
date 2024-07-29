@@ -5,16 +5,16 @@ session_start();
 $GenreRepo = new GenreRepository;
 $genres = $GenreRepo->getAll();
 
-$getFilm = new FilmRespository;
+$getFilm = new FilmRepository;
 $films = $getFilm->getAll();
 
 $PersonRepo = new PersonRepository;
-$actors = $PersonRepo->getActor();
-$directors = $PersonRepo->getDirector();
+$actors = $PersonRepo->getActors();
+$directors = $PersonRepo->getDirectors();
 
 if (isset($_GET["id"])) {
     $filmID = $_GET["id"];
-    $FilmRepo = new FilmRespository;
+    $FilmRepo = new FilmRepository;
     $film = $FilmRepo->getByFilmID($filmID);
 }
 
@@ -49,7 +49,7 @@ if (isset($_POST["update"])) {
             $genre = $GenreRepo->getById($genreID);
             $film->addGenre($genre);
         }
-        $FilmRepo = new FilmRespository;
+        $FilmRepo = new FilmRepository;
         $FilmRepo->Update($film);
         $_SESSION["update"] = $film->getTitle(). " updated";
         header("location: index.php");

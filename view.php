@@ -7,7 +7,7 @@ $genres = $GenreRepo->getAll();
 $filmID = (isset($_GET["id"])) ? $_GET["id"] : null;
 
 if ($filmID) {
-    $FilmRepo = new FilmRespository;
+    $FilmRepo = new FilmRepository;
     $film = $FilmRepo->getByFilmID($filmID);
     $filmRelatives = $FilmRepo->getByGenreOfFilm($film);
 }

@@ -4,7 +4,7 @@ session_start();
 $GenreRepo = new GenreRepository;
 $genres = $GenreRepo->getAll();
 
-$FilmRepo = new FilmRespository;
+$FilmRepo = new FilmRepository;
 $films = $FilmRepo->getAll();
 
 if(! isset($_SESSION["name"])) {

@@ -1,6 +1,6 @@
 <?php
 
-class FilmRespository
+class FilmRepository
 {
     public function getByFilmID($filmID)
     {
@@ -16,39 +16,18 @@ class FilmRespository
 
         $film = new Film($row);
 
-        $sql1 = "SELECT person.personID, person.name, person.gender, person.birthday, person.role FROM person
-            JOIN film_actor ON film_actor.actorID = person.personID
-            JOIN film ON film.filmID = film_actor.filmID 
-            WHERE film.filmID = :filmID AND person.role = 'actor'";
-        $stmt1 = $pdo->prepare($sql1);
-        $stmt1->execute([":filmID" => $filmID]);
-        while ($row1 = $stmt1->fetchObject()) {
-            $person = new Person($row1);
-            $film->addActor($person);
+        $PersonRepo = new PersonRepository();
+        foreach ($PersonRepo->getActorbyFilm($film) as $actor) {
+            $film->addActor($actor);
         }
 
+        $director = $PersonRepo->getDirectorbyFilm($film);
+        $film->addDirector($director);
 
-        $sql2 = "SELECT genres.genreID, genres.name FROM genres 
-                JOIN film_genre ON film_genre.genreID = genres.genreID
-                JOIN film ON film.filmID = film_genre.filmID
-                WHERE film.filmID = :filmID";
-        $stmt2 = $pdo->prepare($sql2);
-        $stmt2->execute([':filmID' => $filmID]);
-        while ($row2 = $stmt2->fetchObject()) {
-            $genre = new genre();
-            $genre->setGenreID($row2->genreID);
-            $genre->setName($row2->name);
+        $GenrePero = new GenreRepository();
+        foreach ($GenrePero->getByFilm($film) as $genre) {
             $film->addGenre($genre);
         }
-
-        $sql3 = "SELECT person.personID, person.name, person.gender, person.birthday, person.role FROM person 
-                JOIN film ON film.directorID = person.personID
-                WHERE film.filmID = :filmID";
-        $stmt3 = $pdo->prepare($sql3);
-        $stmt3->execute([':filmID' => $filmID]);
-        $row3 = $stmt3->fetchObject();
-        $director = new Person($row3);
-        $film->addDirector($director);
 
         return $film;
     }
@@ -63,38 +42,18 @@ class FilmRespository
         while ($row = $stmt->fetchObject()) {
             $film = new Film($row);
 
-            $sql1 = "SELECT person.personID, person.name, person.gender, person.birthday, person.role FROM person
-                    JOIN film_actor ON film_actor.actorID = person.personID
-                    JOIN film ON film.filmID = film_actor.filmID 
-                    WHERE film.filmID = :filmID AND person.role = 'actor'";
-            $stmt1 = $pdo->prepare($sql1);
-            $stmt1->execute([":filmID" => $row->filmID]);
-            while ($row1 = $stmt1->fetchObject()) {
-                $person = new Person($row1);
-                $film->addActor($person);
+            $PersonRepo = new PersonRepository();
+            foreach ($PersonRepo->getActorbyFilm($film) as $actor) {
+                $film->addActor($actor);
             }
 
-            $sql2 = "SELECT genres.genreID, genres.name FROM genres 
-                    JOIN film_genre ON film_genre.genreID = genres.genreID
-                    JOIN film ON film.filmID = film_genre.filmID
-                    WHERE film.filmID = :filmID";
-            $stmt2 = $pdo->prepare($sql2);
-            $stmt2->execute([':filmID' => $row->filmID]);
-            while ($row2 = $stmt2->fetchObject()) {
-                $genre = new genre();
-                $genre->setGenreID($row2->genreID);
-                $genre->setName($row2->name);
+            $director = $PersonRepo->getDirectorbyFilm($film);
+            $film->addDirector($director);
+
+            $GenrePero = new GenreRepository();
+            foreach ($GenrePero->getByFilm($film) as $genre) {
                 $film->addGenre($genre);
             }
-
-            $sql3 = "SELECT person.personID, person.name, person.gender, person.birthday, person.role FROM person 
-                    JOIN film ON film.directorID = person.personID
-                    WHERE film.filmID = :filmID";
-            $stmt3 = $pdo->prepare($sql3);
-            $stmt3->execute([':filmID' => $row->filmID]);
-            $row3 = $stmt3->fetchObject();
-            $director = new Person($row3);
-            $film->addDirector($director);
 
             $films[] = $film;
         }
@@ -117,38 +76,18 @@ class FilmRespository
         while ($row = $stmt->fetchObject()) {
             $film = new film($row);
 
-            $sql1 = "SELECT person.personID, person.name, person.gender, person.birthday, person.role FROM person
-                    JOIN film_actor ON film_actor.actorID = person.personID
-                    JOIN film ON film.filmID = film_actor.filmID 
-                    WHERE film.filmID = :filmID AND person.role = 'actor'";
-            $stmt1 = $pdo->prepare($sql1);
-            $stmt1->execute([":filmID" => $row->filmID]);
-            while ($row1 = $stmt1->fetchObject()) {
-                $person = new Person($row1);
-                $film->addActor($person);
+            $PersonRepo = new PersonRepository();
+            foreach ($PersonRepo->getActorbyFilm($film) as $actor) {
+                $film->addActor($actor);
             }
 
-            $sql2 = "SELECT genres.genreID, genres.name FROM genres 
-                    JOIN film_genre ON film_genre.genreID = genres.genreID
-                    JOIN film ON film.filmID = film_genre.filmID
-                    WHERE film.filmID = :filmID";
-            $stmt2 = $pdo->prepare($sql2);
-            $stmt2->execute([':filmID' => $row->filmID]);
-            while ($row2 = $stmt2->fetchObject()) {
-                $genre = new genre();
-                $genre->setGenreID($row2->genreID);
-                $genre->setName($row2->name);
+            $director = $PersonRepo->getDirectorbyFilm($film);
+            $film->addDirector($director);
+
+            $GenrePero = new GenreRepository();
+            foreach ($GenrePero->getByFilm($film) as $genre) {
                 $film->addGenre($genre);
             }
-
-            $sql3 = "SELECT person.personID, person.name, person.gender, person.birthday, person.role FROM person 
-                    JOIN film ON film.directorID = person.personID
-                    WHERE film.filmID = :filmID";
-            $stmt3 = $pdo->prepare($sql3);
-            $stmt3->execute([':filmID' => $row->filmID]);
-            $row3 = $stmt3->fetchObject();
-            $director = new Person($row3);
-            $film->addDirector($director);
 
             $films[] = $film;
         }

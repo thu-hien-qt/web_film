@@ -61,11 +61,7 @@ class Film
 
     public function getActors()
     {
-        $actors = [];
-        foreach ($this->actors as $actor) {
-            $actors[] = $actor;
-        }
-        return $actors;
+        return $this->actors;
     }
 
     public function removeAllActor()
@@ -85,11 +81,7 @@ class Film
 
     public function getGenres()
     {
-        $genres = [];
-        foreach ($this->genres as $genre) {
-            $genres[] = $genre;
-        }
-        return $genres;
+        return $this->genres;
     }
 
     public function addDirector(Person $director)

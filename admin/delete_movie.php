@@ -13,7 +13,7 @@ if (isset($_POST["no"])) {
 if (isset($_POST["yes"]) && isset($_SESSION['filmID'])) 
 {
     $filmID = $_SESSION['filmID'];
-    $FilmRepo = new FilmRespository;
+    $FilmRepo = new FilmRepository;
     $film = $FilmRepo->getByFilmID($filmID);
     $FilmRepo->Delete($film);
     $_SESSION["delete"] = $film->getTitle(). " deleted";

@@ -20,7 +20,4 @@ if (isset($_GET["genreID"])) {
     exit;
 }
 
-
-
-
 require_once '..\..\template\admin\genre\delete_genre.phtml';

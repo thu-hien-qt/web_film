@@ -17,7 +17,7 @@ class PersonRepository
 
     }
 
-    public function getActor()
+    public function getActors()
     {
         $pdo = MyPDO::getInstance();
         $query = 'SELECT * FROM person WHERE role = "actor"';
@@ -32,7 +32,7 @@ class PersonRepository
 
     }
 
-    public function getDirector()
+    public function getDirectors()
     {
         $pdo = MyPDO::getInstance();
         $query = 'SELECT * FROM person WHERE role = "director"';
@@ -60,6 +60,34 @@ class PersonRepository
 
         $person = new Person($row);
         return $person;
+    }
+
+    public function getActorbyFilm(Film $film) {
+        $pdo = MyPDO::getInstance();
+        $sql = "SELECT person.personID, person.name, person.gender, person.birthday, person.role FROM person
+            JOIN film_actor ON film_actor.actorID = person.personID
+            JOIN film ON film.filmID = film_actor.filmID 
+            WHERE film.filmID = :filmID AND person.role = 'actor'";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([":filmID" => $film->getFilmID()]);
+        $actors = [];
+        while ($row1 = $stmt->fetchObject()) {
+            $actor = new Person($row1);
+            $actors[] = $actor;
+        }
+        return $actors;
+    }
+
+    public function getDirectorbyFilm(Film $film) {
+        $pdo = MyPDO::getInstance();
+        $sql = "SELECT person.personID, person.name, person.gender, person.birthday, person.role FROM person 
+                JOIN film ON film.directorID = person.personID
+                WHERE film.filmID = :filmID";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([':filmID' => $film->getFilmID()]);
+        $row = $stmt->fetchObject();
+        $director = new Person($row);
+        return $director;
     }
 
     public function insert(Person $person)

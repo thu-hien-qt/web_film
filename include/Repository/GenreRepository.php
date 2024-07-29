@@ -39,6 +39,24 @@ class GenreRepository
         return $genre;
     }
 
+    public function getByFilm(Film $film) {
+        $pdo = MyPDO::getInstance();
+        $sql = "SELECT genres.genreID, genres.name FROM genres 
+                JOIN film_genre ON film_genre.genreID = genres.genreID
+                JOIN film ON film.filmID = film_genre.filmID
+                WHERE film.filmID = :filmID";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([':filmID' => $film->getFilmID()]);
+        $genres = [];
+        while ($row2 = $stmt->fetchObject()) {
+            $genre = new genre();
+            $genre->setGenreID($row2->genreID);
+            $genre->setName($row2->name);
+            $genres[] = $genre;
+        }
+        return $genres;
+    }
+
     public function insert(Genre $genre)
     {
         $pdo = MyPDO::getInstance();

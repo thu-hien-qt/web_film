@@ -20,6 +20,25 @@ class CommentRepository
         return $cmts;
     }
 
+    public function getByFilmID($filmID)
+    {
+        $pdo = MyPDO::getInstance();
+        $query = "SELECT * FROM comments WHERE filmID = :filmID ORDER BY datetime";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute([':filmID'=>$filmID]);
+        $cmts = [];
+        while ($row = $stmt->fetchObject())
+        {
+            $cmt = new Comment;
+            $cmt->setID($row->ID);
+            $cmt->setFilmID($row->filmID);
+            $cmt->setComment($row->comment);
+            $cmt->setDatetime($row->datetime);
+            $cmts[] = $cmt;
+        }
+        return $cmts;
+    }
+
     public function insertCmt(Comment $cmt)
     {
         $pdo = MyPDO::getInstance();

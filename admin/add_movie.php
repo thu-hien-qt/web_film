@@ -6,8 +6,8 @@ $GenreRepo = new GenreRepository;
 $genres = $GenreRepo->getAll();
 
 $PersonRepo = new PersonRepository;
-$actors = $PersonRepo->getActor();
-$directors = $PersonRepo->getDirector();
+$actors = $PersonRepo->getActors();
+$directors = $PersonRepo->getDirectors();
 
 $error = "";
 
@@ -39,7 +39,7 @@ if (isset($_POST["addNew"])) {
             $film->addGenre($genre);
         }
 
-        $FilmRepo = new FilmRespository;
+        $FilmRepo = new FilmRepository;
         $FilmRepo->Insert($film);
 
         header('location: index.php');
