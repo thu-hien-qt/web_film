@@ -54,6 +54,11 @@ class Film
         $this->manufacture = $manufacture;
     }
 
+    public function setActors($actors = [])
+    {
+        $this->actors = $actors;
+    }
+
     public function addActor(Person $actor)
     {
         $this->actors[] = $actor;
@@ -67,6 +72,11 @@ class Film
     public function removeAllActor()
     {
         $this->actors = [];
+    }
+
+    public function setGenres($genres = [])
+    {
+        $this->genres = $genres;
     }
 
     public function addGenre(Genre $genre)
@@ -128,4 +138,6 @@ class Film
     {
         $this->description = $description;
     }
+
+    
 }

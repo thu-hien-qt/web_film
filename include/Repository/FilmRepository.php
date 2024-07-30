@@ -2,6 +2,15 @@
 
 class FilmRepository
 {
+    public function populateFilm(Film $film)
+    {
+        $PersonRepo = new PersonRepository();
+        $film->setActors($PersonRepo->getActorbyFilm($film));
+        $film->addDirector($PersonRepo->getDirectorbyFilm($film));
+        $GenrePero = new GenreRepository();
+        $film->setGenres($GenrePero->getByFilm($film));
+    }
+
     public function getByFilmID($filmID)
     {
         $pdo = MyPDO::getInstance();
@@ -15,20 +24,7 @@ class FilmRepository
         }
 
         $film = new Film($row);
-
-        $PersonRepo = new PersonRepository();
-        foreach ($PersonRepo->getActorbyFilm($film) as $actor) {
-            $film->addActor($actor);
-        }
-
-        $director = $PersonRepo->getDirectorbyFilm($film);
-        $film->addDirector($director);
-
-        $GenrePero = new GenreRepository();
-        foreach ($GenrePero->getByFilm($film) as $genre) {
-            $film->addGenre($genre);
-        }
-
+        $this->populateFilm($film);
         return $film;
     }
 
@@ -41,20 +37,7 @@ class FilmRepository
         $films = [];
         while ($row = $stmt->fetchObject()) {
             $film = new Film($row);
-
-            $PersonRepo = new PersonRepository();
-            foreach ($PersonRepo->getActorbyFilm($film) as $actor) {
-                $film->addActor($actor);
-            }
-
-            $director = $PersonRepo->getDirectorbyFilm($film);
-            $film->addDirector($director);
-
-            $GenrePero = new GenreRepository();
-            foreach ($GenrePero->getByFilm($film) as $genre) {
-                $film->addGenre($genre);
-            }
-
+            $this->populateFilm($film);
             $films[] = $film;
         }
         return $films;
@@ -75,20 +58,7 @@ class FilmRepository
         $films = [];
         while ($row = $stmt->fetchObject()) {
             $film = new film($row);
-
-            $PersonRepo = new PersonRepository();
-            foreach ($PersonRepo->getActorbyFilm($film) as $actor) {
-                $film->addActor($actor);
-            }
-
-            $director = $PersonRepo->getDirectorbyFilm($film);
-            $film->addDirector($director);
-
-            $GenrePero = new GenreRepository();
-            foreach ($GenrePero->getByFilm($film) as $genre) {
-                $film->addGenre($genre);
-            }
-
+            $this->populateFilm($film);
             $films[] = $film;
         }
         return $films;
@@ -115,6 +85,7 @@ class FilmRepository
         $films = [];
         while ($row = $stmt2->fetchObject()) {
             $film = new Film($row);
+            $this->populateFilm($film);
             $films[] = $film;
         }
         return $films;

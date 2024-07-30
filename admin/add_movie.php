@@ -13,9 +13,9 @@ $error = "";
 
 if (isset($_POST["addNew"])) {
     if (
-        empty($_POST["title"]) OR empty($_POST["manufacture"]) OR empty($_POST["link"])
-        OR empty($_POST["img"]) OR empty($_POST["description"]) OR empty($_POST["director"])
-        OR empty($_POST["actors"]) OR empty($_POST["genres"])
+        empty($_POST["title"]) || empty($_POST["manufacture"]) || empty($_POST["link"])
+        || empty($_POST["img"]) || empty($_POST["description"]) || empty($_POST["director"])
+        || empty($_POST["actors"]) || empty($_POST["genres"])
     ) {
         $error = "Please complete all information.";
     } else {
@@ -40,7 +40,7 @@ if (isset($_POST["addNew"])) {
         }
 
         $FilmRepo = new FilmRepository;
-        $FilmRepo->Insert($film);
+        $FilmRepo->insert($film);
 
         header('location: index.php');
 

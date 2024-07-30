@@ -22,7 +22,7 @@ if (isset($_POST["add"])) {
 }
 
 
-if (isset($_POST["update"])&& isset($_POST['filmID']) ) {
+if (isset($_POST["update"]) && isset($_POST['filmID']) ) {
     $_SESSION["filmID"] = $_POST["filmID"];
     header("location: update_movie.php");
     exit;
