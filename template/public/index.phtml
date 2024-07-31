@@ -34,22 +34,21 @@
             </div>
 
             <?php
-            while ($row1 = $statement1->fetch(PDO::FETCH_ASSOC)) {
+            foreach ($genres as $genre) {
                 echo ('<div class="genres">');
-                echo ('<form method="post"><input type="hidden" ');
-                echo ('name="genre" value="' . $row1['name'] . '">' . "\n");
-                echo ('<button class="genre_button" type="submit" >'.$row1['name'] .'</button>');
-                echo ("\n</form></div>\n");
+                echo ('<a href="category.php?id='.$genre->getGenreID() .'">'. $genre->getName() . '</a>');
+                echo ("</div>\n");
             }
 
             ?>
+            <a href=""></a>
             <div class="clear"></div>
         </div>
         <div class="films">
             <?php
-            while ($row2 = $film->fetch(PDO::FETCH_ASSOC)) {
-                echo '<div class="movie"><a href="view.php?id='.$row2["filmID"].'"><img  src="' . $row2["img"] . '">';
-                echo '<div class="name">' . $row2["title"] . ' (' . $row2["manufacture"] . ') </div><div class="clear"></div></a><div class="clear"></div></div>'."\n";
+            foreach ($films as $film) {
+                echo '<div class="movie"><a href="view.php?id='.$film->getFilmID().'"><img  src="' . $film->getImg() . '">';
+                echo '<div class="name">' . $film->getTitle() . ' (' . $film->getManufacture() . ') </div><div class="clear"></div></a><div class="clear"></div></div>'."\n";
             }
             ?>
             <div class="clear"></div>

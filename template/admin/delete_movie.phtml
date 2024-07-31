@@ -67,14 +67,11 @@
                 <a href="index.php">Trang chủ</a>
             </div>
 
-            
             <?php
-            while ($row1 = $statement1->fetch(PDO::FETCH_ASSOC)) {
+            foreach ($genres as $genre) {
                 echo ('<div class="genres">');
-                echo ('<form method="post"><input type="hidden" ');
-                echo ('name="genre" value="' . $row1['name'] . '">' . "\n");
-                echo ('<button class="genre_button" type="submit" >'.$row1['name'] .'</button>');
-                echo ("\n</form></div>\n");
+                echo ('<a href="list_movie.php?id='.$genre->getGenreID() .'">'. $genre->getName() . '</a>');
+                echo ("</div>\n");
             }
 
             ?>

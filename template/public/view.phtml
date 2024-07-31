@@ -62,6 +62,7 @@
 </style>
 
 <body>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <div class="active">
         <div class="hd">
             <div class="icon">
@@ -85,14 +86,11 @@
             <div class="genres">
                 <a href="index.php">Trang chủ</a>
             </div>
-
             <?php
-            while ($row1 = $statement1->fetch(PDO::FETCH_ASSOC)) {
+            foreach ($genres as $genre) {
                 echo ('<div class="genres">');
-                echo ('<form method="post"><input type="hidden" ');
-                echo ('name="genre" value="' . $row1['name'] . '">' . "\n");
-                echo ('<button class="genre_button" type="submit" >' . $row1['name'] . '</button>');
-                echo ("\n</form></div>\n");
+                echo ('<a href="category.php?id=' . $genre->getGenreID() . '">' . $genre->getName() . '</a>');
+                echo ("</div>\n");
             }
 
             ?>
@@ -105,12 +103,44 @@
                 </div>
             </div>
             <div class="describe">
-                <h1><?php echo $film["title"] . ' (' . $film["manufacture"] . ') ' ?></h1>
-                <p>Director: <?php echo $film["director"] ?></p>
-                <p>Genres: <?php echo $film["genres"] ?></p>
-                <p>Actors: <?php echo $film["actors"] ?></p>
-                <p>Description: <?php echo $film["description"] ?></p>
+                <h1><?php echo $film->getTitle() . ' (' . $film->getManufacture() . ') ' ?></h1>
+                <p>Director: <?php echo $film->getDirector()->getName() ?></p>
+                <p>Genres:
+                    <?php
+                    $genres = [];
+                    foreach ($film->getGenres() as $genre) {
+                        $genres[] = $genre->getName();
+                    }
+
+                    echo $result_g = implode(", ", $genres);
+                    ?>
+                </p>
+                <p>Actors:
+                    <?php
+                    $actors = [];
+                    foreach ($film->getActors() as $actor) {
+                        $actors[] = $actor->getName();
+                    }
+
+                    echo $result_a = implode(", ", $actors);
+                    ?>
+                <p>Description: <?php echo $film->getDescription() ?></p>
             </div>
+            <div class="clear"></div>
+        </div>
+        <div>
+            <div class="comment">
+                <div class="h2">
+                    <div>Comment</div>
+                </div>
+                <form id="comment-form">
+                    <textarea id="comment-text" placeholder="Write your comment here"></textarea>
+                    <input type="hidden" id="filmID" value="<?php echo $_GET["id"]; ?>">
+                    <button id="submit-comment">Send</button>
+                </form>
+            </div>
+            <div id="comments-section"></div>
+            <script src="../phim/asset/public.js"></script>
             <div class="clear"></div>
         </div>
         <div class="relative">
@@ -119,9 +149,9 @@
         </div>
         <div class="films">
             <?php
-            while ($row2 = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                echo '<div class="movie"><a href="view.php?id=' . $row2["filmID"] . '"><img  src="' . $row2["img"] . '">';
-                echo '<div class="name">' . $row2["title"] . ' (' . $row2["manufacture"] . ') </div><div class="clear"></div></a><div class="clear"></div></div>' . "\n";
+            foreach ($filmRelatives as $row2) {
+                echo '<div class="movie"><a href="view.php?id=' . $row2->getFilmID() . '"><img  src="' . $row2->getImg() . '">';
+                echo '<div class="name">' . $row2->getTitle() . ' (' . $row2->getManufacture() . ') </div><div class="clear"></div></a><div class="clear"></div></div>' . "\n";
             }
             ?>
             <div class="clear"></div>

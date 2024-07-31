@@ -1,0 +1,108 @@
+body {
+    background-color: rgb(52, 52, 52);
+    padding: 0 1em;
+}
+
+.active {
+    max-width: 1150px;
+    margin: auto;
+}
+
+.clear {
+    clear: both;
+}
+
+.hd {
+    background-color: rgb(30, 30, 30);
+}
+
+div a:hover {
+    text-decoration: none;
+    color: rgb(39, 166, 73) !important;
+}
+
+div a:link {
+    color: white;
+    text-decoration: none;
+}
+
+div a:visited {
+    color: white;
+}
+
+.icon {
+    width: 5em;
+    float: left;
+}
+
+.user {
+    float: right;
+    padding:0.7em;
+    width: 10em;
+    height: 2.5em;
+    text-align: right;
+}
+
+.genre {
+    float: left;
+    font-size: 1.5em; 
+    font-weight: 700;
+    padding: 0 0.5em;
+    margin-top: 0.5em;
+}
+
+.name {
+    color: white;
+    font-size: large;
+}
+
+.log {
+    padding: 0 0.5em;
+    border: 1px solid white;
+    border-radius: 25px;
+    margin: 0.5em 0.5em;
+    font-size: 20px;
+}
+
+.clear {
+    clear: both;
+}
+
+.hd {
+    background-color: rgb(30, 30, 30);
+}
+
+.home_page {
+    border-bottom: 0.5px solid rgb(130, 127, 127);
+}
+
+
+.distan {
+    width: 20em;
+    padding: 0.7em 0.8em;
+    border-radius: 10px;
+    border: 1px solid gray;
+    font-size: 17px;
+}
+
+.form {
+    padding: 0.4em 0;
+}
+
+.submit {
+    background-color: blue;
+    color: white;
+}
+
+.formm {
+    width: 24em;
+    margin-top: 3em;
+    padding-top: 1em;
+    border: 1px solid white;
+    border-radius: 10px;
+    background-color: white;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+
+}

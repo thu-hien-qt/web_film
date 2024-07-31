@@ -1,15 +1,12 @@
 <?php 
-require_once "include/pdo.php";
-$statement1 = $pdo->query('SELECT name FROM genres');
+require_once "include/inc.php";
 session_start();
 unset($_SESSION["name"]);
+$GenreRepo = new GenreRepository;
+$genres = $GenreRepo->getAll();
 
-$film = $pdo->query("SELECT filmID, title, manufacture, img FROM film");
-
-if (isset($_POST['genre'])) {
-    $_SESSION["genre"] = $_POST["genre"];
-    header("location: category.php");
-}
+$FilmRepo = new FilmRepository;
+$films = $FilmRepo->getAll();
 
 require_once "template/public/index.phtml";
 

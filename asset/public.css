@@ -46,10 +46,8 @@ div a:visited {
     float: left;
     font-size: 1.5em;
     font-weight: 700;
-    padding: 0 0.2em;
+    padding: 0 0.5em;
     margin-top: 0.5em;
-    
-
 }
 
 .name {
@@ -91,18 +89,67 @@ img {
     height: auto;
 }
 
-.genre_button {
-    background-color:rgb(52, 52, 52);
-    border:0cap solid ;
-    font-size: 22px;
-    color: white;
-    font-family: 'Times New Roman', Times, serif;
-}
-
-.genre_button:hover {
-    color: green;
-}
-
 form {
     margin: 0em;
 }
+
+.comment {
+    background-color: rgb(33, 32, 32);
+    border-radius: 10px;
+    margin-top: 1em;
+    padding-bottom: 1em;
+}
+
+.h2 {
+    padding: 0.5em 1em;
+    color: rgb(240, 237, 237) !important;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#comment-text {
+    width: 93%;
+    max-width: 1060px;
+    height: 2em;
+    border-radius: 8px;
+    margin:0 0 1em 1em;
+    float: left;
+}
+
+.submit-comment {
+    margin-bottom: 0.5 em;
+    margin-right: 0.3em;
+    float: right;
+    width: 3%;
+}
+
+#comments-section {
+    margin-top: 1em;
+    color: white;
+}
+
+.user_icon {
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+    float: left;
+}
+
+.user_comment {
+    padding: 0.5em;
+    margin: 0.5em 0;
+    background-color: rgb(23, 23, 23);
+    border-radius: 10px;
+}
+
+.cmt_info {
+    margin-bottom: 0.3em;
+}
+
+.cmt_main {
+    width: 95%;
+    float: right;
+}
+
+
+

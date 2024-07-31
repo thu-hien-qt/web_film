@@ -1,4 +1,3 @@
-
 <html>
 
 <head>
@@ -16,10 +15,13 @@
         margin: auto;
         margin-top: 1em;
         max-width: 1120px;
-        
+
     }
 
-
+    .error {
+        color: red;
+        font-weight: bold;
+    }
 </style>
 
 <body>
@@ -46,15 +48,11 @@
             <div class="genres">
                 <a href="index.php">Trang chủ</a>
             </div>
-
-           
             <?php
-            while ($row4 = $statement4->fetch(PDO::FETCH_ASSOC)) {
+            foreach ($genres as $genre) {
                 echo ('<div class="genres">');
-                echo ('<form method="post"><input type="hidden" ');
-                echo ('name="genre" value="' . $row4['name'] . '">' . "\n");
-                echo ('<button class="genre_button" type="submit" >'.$row4['name'] .'</button>');
-                echo ("\n</form></div>\n");
+                echo ('<a href="list_movie.php?id=' . $genre->getGenreID() . '">' . $genre->getName() . '</a>');
+                echo ("</div>\n");
             }
 
             ?>
@@ -62,42 +60,88 @@
         </div>
     </div>
     <div class="add_form">
-    <h1>Add A New Film</h1>
-    <form method="post">
-        <p>Title:<input type="text" name="title" size="40"></p>
-        <p>Genre:
-            <?php
-            while ($row5 = $statement5->fetch(PDO::FETCH_ASSOC)) {
-                echo '<label for="' . htmlspecialchars($row5["name"]) . '">' . htmlspecialchars($row5["name"]) . '</label>';
-                echo '<input type="checkbox" name="genres[]" id="' . htmlspecialchars($row5["name"]) . '" value="' . htmlspecialchars($row5["genreID"]) . '">';
-            }
-            ?>
-
-        </p>
-        <p>Manufacture of year:<input type="year" name="manufacture"></p>
-        <p>Director:
-            <label for="director"></label>
-            <select name="director" id="director">
+        <h1>Add A New Film</h1>
+        <form method="post">
+            <p>Title:
+                <input type="text" name="title" size="40" value="<?php if (isset($_POST["title"])) {
+                                                                        echo $_POST["title"];
+                                                                    } else {
+                                                                        echo "";
+                                                                    } ?>">
+            </p>
+            <p>Genre:
                 <?php
-                while ($row3 = $statement3->fetch(PDO::FETCH_ASSOC)) {
-                    echo '<option value ="' . $row3["personID"] . '">' . $row3["name"] . '</option>';
+                foreach ($genres as $genre) {
+                    $checked = "";
+                    if (isset($_POST["genres"])) {
+                        foreach ($_POST["genres"] as $gen) {
+                            if ($genre->getGenreID() == $gen) {
+                                $checked = "checked";
+                                break;
+                            }
+                        }
+                    }
+                    echo '<label for="' . $genre->getGenreID() . '">' . $genre->getName() . '</label>';
+                    echo '<input type="checkbox" name="genres[]" id="' . $genre->getGenreID() . '" value="' . $genre->getGenreID() . '"' . $checked . '>';
                 }
                 ?>
-            </select>
-        </p>
-        <p>Actors:
-            <?php
-            while ($row2 = $statement2->fetch(PDO::FETCH_ASSOC)) {
-                echo '<label for="' . $row2["name"] . '">' . $row2["name"] . '</label>';
-                echo '<input type="checkbox" name="actors[]" id="' . $row2["name"] . '" value="' . $row2["personID"] . '">';
-            }
-            ?>
 
-        </p>
-        <p>Img link: <input type="url" name="img"></p>
-        <p>Link: <input type="url" name="link"></p>
-        <p>Description: <input type="text" name="description"></p>
-        <p><input type="submit" name="addNew" value="Add New" /></p>
-    </form>
+            </p>
+            <p>Manufacture of year:<input type="year" name="manufacture"></p>
+            <p>Director:
+                <label for="director"></label>
+                <select name="director" id="director">
+                    <?php
+                    foreach ($directors as $director) {
+                        $selected = "";
+                        if (isset($_POST["director"])) {
+                            if ($_POST["director"] == $director->getPersonID()) {
+                                $selected = " selected ";
+                            }
+                        }
+
+                        echo '<option value ="' . $director->getPersonID() . '"' . $selected . '>' . $director->getName() . '</option>';
+                    }
+                    ?>
+                </select>
+            </p>
+            <p>Actors:
+                <?php
+                foreach ($actors as $actor) {
+                    $checked = "";
+                    if (isset($_POST["actors"])) {
+                        foreach ($_POST["actors"] as $act) {
+                            if ($actor->getPersonID() == $act) {
+                                $checked = "checked";
+                                break;
+                            }
+                        }
+                    }
+                    echo '<label for="' . $actor->getPersonID() . '">' . $actor->getName() . '</label>';
+                    echo '<input type="checkbox" name="actors[]" id="' . $actor->getPersonID() . '" value="' . $actor->getPersonID() . '"' . $checked . '>';
+                }
+                ?>
+
+            </p>
+            <p>Img link: <input type="url" name="img" value="<?php if (isset($_POST["img"])) {
+                                                                    echo $_POST["img"];
+                                                                } else {
+                                                                    echo "";
+                                                                } ?>"></p>
+            <p>Link: <input type="url" name="link" value="<?php if (isset($_POST["link"])) {
+                                                                echo $_POST["link"];
+                                                            } else {
+                                                                echo "";
+                                                            } ?>"></p>
+            <p>Description: <input type="text" name="description" value="<?php if (isset($_POST["description"])) {
+                                                                                echo $_POST["description"];
+                                                                            } else {
+                                                                                echo "";
+                                                                            } ?>"></p>
+            <p><input type="submit" name="addNew" value="Add New" /></p>
+        </form>
+        <div class="error">
+            <?php echo $error ?>
+        </div>
     </div>
 </body>

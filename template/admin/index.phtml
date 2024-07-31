@@ -1,0 +1,85 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href='../asset/admin.css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+    <div class="active">
+        <div class="hd">
+            <div class="icon">
+                <a href="index.php"><img class="icon" src="https://w7.pngwing.com/pngs/130/1021/png-transparent-movie-logo-movie-logo-film-tape-cinema.png" alt=""></a>
+  </div>
+
+            <div>
+                <div class="user">
+                    <?php
+                    if (isset($_SESSION["name"])) {
+                        echo '<span class= "user_name">' . $_SESSION["name"] . '</span>';
+                        echo '<a href="../index.php"><span class ="log">Log out</span></a>';
+                    } else {
+                        echo '<a href="../log.php"><span class = "log">Log in</span></a>';
+                    } ?>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="home_page">
+            <div class="main">
+                <a href="index.php">Trang chủ</a>
+            </div>
+            <div class="main"><a href="list_movie.php?address=genre">Genre</a></div>
+            <div class="main"><a href="list_movie.php?address=person">Person</a></div>
+            <div class="main"><a href="list_movie.php?address=user">User</a></div>
+            <form method="post">
+                <button class="add" type="submit" name="add">Add film</button>
+            </form>
+            <div class="clear"></div>
+        </div>
+        <div class="inform"> 
+            <?php if (isset($_SESSION["update"])) { echo $_SESSION["update"]; unset($_SESSION["update"]);}
+                if (isset($_SESSION["delete"])) { echo $_SESSION["delete"]; unset ($_SESSION["delete"]);}
+            ?>
+        </div>
+        <div class="films">
+            <?php
+            echo '<table><tr><th>Title</th><th>Manufacture</th><th>Genres</th><th>Actors</th><th>Director</th><th>Img link</th><th>Link</th><th>Description</th><th></th></tr>';
+            foreach ($films as $film) {
+                
+                echo '<tr><td>'.$film->getTitle().'</td>';
+                echo '<td>'.$film->getManufacture().'</td><td>';
+                $genres = [];
+                foreach ($film->getGenres() as $genre)
+                {
+                    $genres[] = $genre->getName();
+                }
+                echo implode(", ",$genres).'</td><td>';
+                $actors = [];
+                foreach ($film->getActors() as $actor)
+                {
+                    $actors[] = $actor->getName();
+                }
+                echo implode(", ",$actors).'</td><td>';
+                echo $film->getDirector()->getName().'</td><td>';
+                echo '<a href="'.$film->getImg().'">Img</a></td><td>';
+                echo '<a href="'.$film->getLink().'">Link</a></td><td>';
+                echo $film->getDescription().'</td><td>';
+                echo ('<a href="update_movie.php?id='.$film->getFilmID().'"><button class="button" type="submit">Update</button></a>');
+                echo ('<a href="delete_movie.php?id='.$film->getFilmID().'"><button class="button" type="submit">Delete</button></a>');
+                echo ("\n</td></tr>\n");
+            }
+            echo '</table>';
+            ?>
+            <div class="clear"></div>
+            
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+</body>
+
+</html>

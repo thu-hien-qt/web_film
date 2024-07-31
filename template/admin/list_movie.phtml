@@ -20,7 +20,7 @@
                     <?php
                     if (isset($_SESSION["name"])) {
                         echo '<span class= "name">' . $_SESSION["name"] . '</span>';
-                        echo '<a href="admin\login.php"><span class ="log">Log out</span></a>';
+                        echo '<a href="../index.php"><span class ="log">Log out</span></a>';
                     } else {
                         echo '<a href="../log.php"><span class = "log">Log in</span></a>';
                     } ?>
@@ -29,38 +29,65 @@
             <div class="clear"></div>
         </div>
         <div class="home_page">
-            <div class="genres">
+            <div class="main">
                 <a href="index.php">Trang chủ</a>
             </div>
+            <div class="main"><a href="list_movie.php?address=genre">Genre</a></div>
+            <div class="main"><a href="list_movie.php?address=person">Person</a></div>
+            <div class="main"><a href="list_movie.php?address=user">User</a></div>
 
-            <?php
-            while ($row1 = $statement1->fetch(PDO::FETCH_ASSOC)) {
-                echo ('<div class="genres">');
-                echo ('<form method="post"><input type="hidden" ');
-                echo ('name="genre" value="' . $row1['name'] . '">' . "\n");
-                echo ('<button class="genre_button" type="submit" >'.$row1['name'] .'</button>');
-                echo ("\n</form></div>\n");
-            }
-
-            ?>
-             <form method="post">
-                <button class="add" type="submit" name="add">Add film</button>
-            </form>
+            <a href="<?php echo '../admin/'.$_GET["address"].'/add_'.$_GET["address"].'.php'?>"><button class="add" type="submit">Add</button></a>
             <div class="clear"></div>
         </div>
-        <div class="films">
-        <?php
-            while ($row2 = $statement2->fetch(PDO::FETCH_ASSOC)) {
-                echo '<div class="movie"><a href="view.php"><img  src="' . $row2["img"] . '">';
-                echo '<div class="name">' . $row2["title"] . ' (' . $row2["manufacture"] . ') </div><div class="clear"></div></a>' . "\n";
-                echo ('<form method="post"><input type="hidden" ');
-                echo ('name="filmID" value="' . $row2['filmID'] . '">' . "\n");
-                echo ('<input type="hidden" name="title" value = "' . $row2['title'] . '">' . "\n");
-                echo ('<button class="button" type="submit" name="update" >Update</button>');
-                echo ('<button class="button" type="submit" name="delete" >Delete</button>');
-                echo ("\n</form>\n");
-                echo '<div class="clear"></div></div>';
+        <div>
+            <?php if (isset($_SESSION["update"])) {
+                echo $_SESSION["update"];
+                unset($_SESSION["update"]);
             }
+            if (isset($_SESSION["delete"])) {
+                echo $_SESSION["delete"];
+                unset($_SESSION["delete"]);
+            }
+            ?>
+        </div>
+        <div class="films">
+            <?php
+            if (isset($genres)) {
+                echo '<table><tr><th>GenreID</th><th>Name</th><th></th></tr>';
+                foreach ($genres as $genre) {
+                    echo '<tr><td>' . $genre->getGenreID() . '</td><td>';
+                    echo $genre->getName() . '</td><td>';
+                    echo ('<a href="..\admin\genre\update_genre.php?genreID='. $genre->getGenreID() . '"><button class="button" type="submit">Update</button></a>');
+                    echo ('<a href="..\admin\genre\delete_genre.php?genreID='. $genre->getGenreID() . '"><button class="button" type="submit">Delete</button></a>');
+                    echo '</td></tr>';
+                }
+                echo '</table>';
+            } elseif (isset($people)) {
+                echo '<table><tr><th>personID</th><th>Name</th><th>Gender</th><th>Birthday</th><th>Role</th><th></th></tr>';
+                foreach ($people as $person) {
+                    echo '<tr><td>' . $person->getPersonID() . '</td><td>';
+                    echo $person->getName() . '</td><td>';
+                    echo $person->getGender() . '</td><td>';
+                    echo $person->getBirthday() . '</td><td>';
+                    echo $person->getRole() . '</td><td>';
+                    echo ('<a href="..\admin\person\update_person.php?personID='. $person->getPersonID() . '"><button class="button" type="submit">Update</button></a>');
+                    echo ('<a href="..\admin\person\delete_person.php?personID='. $person->getPersonID() . '"><button class="button" type="submit">Delete</button></a>');
+                    echo '</td></tr>';
+                }
+                echo '</table>';
+            } elseif (isset($users)) {
+                echo '<table><tr><th>UserID</th><th>Name</th><th>User Name</th><th></th></tr>';
+                foreach ($users as $user) {
+                    echo '<tr><td>' . $user->getUserID() . '</td><td>';
+                    echo $user->getName() . '</td><td>';
+                    echo $user->getUserName() . '</td><td>';
+                    echo ('<a href="..\admin\user\update_user.php?userID=' . $user->getUserID(). '"><button class="button" type="submit">Update</button></a>');
+                    echo ('<a href="..\admin\user\delete_user.php?userID=' . $user->getUserID(). '"><button class="button" type="submit">Delete</button></a>');
+                    echo '</td></tr>';
+                }
+                echo '</table>';
+            }
+
             ?>
             <div class="clear"></div>
         </div>
