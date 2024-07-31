@@ -63,6 +63,10 @@
                 }
                 echo '</table>';
             } elseif (isset($people)) {
+                if (isset($_GET["del"]))
+                {
+                    echo $_GET["del"]." deleted";
+                }
                 echo '<table><tr><th>personID</th><th>Name</th><th>Gender</th><th>Birthday</th><th>Role</th><th></th></tr>';
                 foreach ($people as $person) {
                     echo '<tr><td>' . $person->getPersonID() . '</td><td>';
