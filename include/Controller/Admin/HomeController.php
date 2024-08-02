@@ -1,20 +1,18 @@
 <?php
 
-namespace Controller\Front;
+namespace Controller\Admin;
 
-use Controller\AbstractController;
-
-class HomeController extends AbstractController
+class HomeController extends AdminController
 {
     public function index()
     {
-        unset($_SESSION["name"]);
         $GenreRepo = new \GenreRepository();
         $genres = $GenreRepo->getAll();
 
         $FilmRepo = new \FilmRepository();
         $films = $FilmRepo->getAll();
 
-        require_once "template/public/index.phtml";
+        require_once "../template/admin/index.phtml";
     }
+
 }

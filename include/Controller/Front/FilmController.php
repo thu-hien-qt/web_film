@@ -2,7 +2,9 @@
 
 namespace Controller\Front;
 
-class FilmController
+use Controller\AbstractController;
+
+class FilmController extends AbstractController
 {
     public function view() {
 

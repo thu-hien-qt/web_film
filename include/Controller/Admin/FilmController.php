@@ -2,7 +2,7 @@
 
 namespace Controller\Admin;
 
-class FilmController
+class FilmController extends AdminController
 {
     public function viewDetail() {
 

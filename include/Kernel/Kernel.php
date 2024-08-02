@@ -5,45 +5,28 @@ namespace Kernel;
 
 class Kernel
 {
-    function run() {
+    function run($interface) {
         $controller = $_GET["controller"] ?? "";
         $action = $_GET["action"] ?? "";
 
         if (empty($controller) && empty($action)) {
-            $controller = "front.home";
+            if ($interface == 'front') {
+                $controller = "front.home";
+            } elseif ($interface == 'admin') {
+                $controller = "admin.home";
+            }
             $action = "index";
         }
 
-        $callback = $this->routing($controller, $action);
+        $router = new Router();
+        $callback = $router->routing($controller, $action);
         $class = $callback["class"];
         $method = $callback["method"];
 
         $controllerInstance = new $class();
+        $controllerInstance->checkPermission();
+
         $controllerInstance->{$method}();
     }
 
-    private function routing($controller, $action) {
-        $mapping = [
-            "front.home" => [
-                "index" => [
-                    "class" => "Controller\Front\HomeController",
-                    "method" => "index"
-                ]
-            ],
-            "front.film" => [
-                "view" => [
-                    "class" => "Controller\Front\FilmController",
-                    "method" => "view"
-                ]
-            ]
-        ];
-
-        // todo : error when $controller or $action is empty
-
-        if (empty($mapping[$controller][$action])) {
-            throw new \Exception("Route not found : controller $controller, action $action");
-        }
-
-        return $mapping[$controller][$action];
-    }
 }

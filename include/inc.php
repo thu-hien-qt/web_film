@@ -11,6 +11,10 @@ foreach ($repos as $file) {
     require_once $file;
 }
 
+foreach (glob(__DIR__."/Controller/*.php") as $file) {
+    require_once $file;
+}
+
 foreach (glob(__DIR__."/Controller/Admin/*.php") as $file) {
     require_once $file;
 }
