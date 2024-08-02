@@ -10,14 +10,13 @@ if (isset($_POST["no"])) {
     header("location: index.php");
 }
 
-if (isset($_POST["yes"]) && isset($_SESSION['filmID'])) 
+if (isset($_POST["yes"]) && isset($_GET['id'])) 
 {
-    $filmID = $_SESSION['filmID'];
+    $filmID = $_GET['id'];
     $FilmRepo = new FilmRepository;
     $film = $FilmRepo->getByFilmID($filmID);
     $FilmRepo->Delete($film);
     $_SESSION["delete"] = $film->getTitle(). " deleted";
-    unset($_SESSION['filmID']);
     header("location: index.php");
 }
 
