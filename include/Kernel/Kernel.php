@@ -9,6 +9,11 @@ class Kernel
         $controller = $_GET["controller"] ?? "";
         $action = $_GET["action"] ?? "";
 
+        if (empty($controller) && empty($action)) {
+            $controller = "front.home";
+            $action = "index";
+        }
+
         $callback = $this->routing($controller, $action);
         $class = $callback["class"];
         $method = $callback["method"];
@@ -19,6 +24,12 @@ class Kernel
 
     private function routing($controller, $action) {
         $mapping = [
+            "front.home" => [
+                "index" => [
+                    "class" => "Controller\Front\HomeController",
+                    "method" => "index"
+                ]
+            ],
             "front.film" => [
                 "view" => [
                     "class" => "Controller\Front\FilmController",
