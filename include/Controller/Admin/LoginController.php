@@ -16,17 +16,17 @@ class LoginController extends AdminController
         if (isset($_POST["username"]) && isset($_POST["password"])) {
             $userName = $_POST["username"];
             $password = $_POST["password"];
-            $userRepo = new \UserReposiroty();
+            $userRepo = new \UserRepository();
             $user = $userRepo->getUser($userName, $password);
 
             if (empty($user)) {
                 $error = "In correct password";
             } else {
                 $_SESSION["name"] = $user->getName();
-                header("location:index.php");
+                header("location:admin/index.php?controller=admin.home&action=index");
             }
         }
 
-        require_once '..\template\admin\login.phtml';
+        require_once 'template\admin\login.phtml';
     }
 }

@@ -6,7 +6,8 @@ use Controller\AbstractController;
 
 class FilmController extends AbstractController
 {
-    public function view() {
+    public function view()
+    {
 
         $GenreRepo = new \GenreRepository();
         $genres = $GenreRepo->getAll();
@@ -23,7 +24,8 @@ class FilmController extends AbstractController
 
 
         $url = $film->getLink();
-        function getYouTubeID($url) {
+        function getYouTubeID($url)
+        {
             $urlComponents = parse_url($url);
 
             if (!isset($urlComponents['query'])) {
@@ -42,5 +44,19 @@ class FilmController extends AbstractController
         $videoID = getYouTubeID($url);
 
         require_once "template/public/view.phtml";
+    }
+
+    public function category()
+    {
+        $GenreRepo = new \GenreRepository();
+        $genres = $GenreRepo->getAll();
+
+        if (isset($_GET['id'])) {
+            $genreID = $_GET['id'];
+            $FilmRepo = new \FilmRepository();
+            $films = $FilmRepo->getByGenreID($genreID);
+        }
+
+        require_once 'template\public\category.phtml';
     }
 }

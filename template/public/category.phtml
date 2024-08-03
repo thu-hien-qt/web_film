@@ -37,7 +37,7 @@
             <?php
             foreach ($genres as $genre) {
                 echo ('<div class="genres">');
-                echo ('<a href="category.php?id='.$genre->getGenreID() .'">'. $genre->getName() . '</a>');
+                echo ('<a href="index.php?controller=front.film&action=category&id='.$genre->getGenreID() .'">'. $genre->getName() . '</a>');
                 echo ("</div>\n");
             }
 
@@ -47,7 +47,7 @@
         <div class="films">
             <?php
             foreach ($films as $film) {
-                echo '<div class="movie"><a href="view.php?id='.$film->getFilmID().'"><img  src="' . $film->getImg() . '">';
+                echo '<div class="movie"><a href="index.php?controller=front.film&action=view&id='.$film->getFilmID().'"><img  src="' . $film->getImg() . '">';
                 echo '<div class="name">' . $film->getTitle() . ' (' . $film->getManufacture(). ') </div><div class="clear"></div></a><div class="clear"></div></div>'."\n";
             }
             ?>

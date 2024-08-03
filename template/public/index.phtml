@@ -22,7 +22,7 @@
                         echo '<span class= "name">' . $_SESSION["name"] . '</span>';
                         echo '<a href="admin\index.php"><span class ="log">Log out</span></a>';
                     } else {
-                        echo '<a href="admin\login.php"><span class = "log">Log in</span></a>';
+                        echo '<a href="index.php?controller=admin.login&action=login"><span class = "log">Log in</span></a>';
                     } ?>
                 </div>
             </div>
@@ -36,7 +36,7 @@
             <?php
             foreach ($genres as $genre) {
                 echo ('<div class="genres">');
-                echo ('<a href="category.php?id='.$genre->getGenreID() .'">'. $genre->getName() . '</a>');
+                echo ('<a href="index.php?controller=front.film&action=category&id='.$genre->getGenreID() .'">'. $genre->getName() . '</a>');
                 echo ("</div>\n");
             }
 

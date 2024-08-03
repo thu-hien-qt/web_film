@@ -1,6 +1,6 @@
 <?php
 
-class UserReposiroty
+class UserRepository
 {
     public function getUser($userName, $password)
     {
