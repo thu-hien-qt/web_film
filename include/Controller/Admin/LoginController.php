@@ -10,9 +10,6 @@ class LoginController extends AdminController
     }
 
     public function login() {
-        $GenreRepo = new \GenreRepository();
-        $genres = $GenreRepo->getAll();
-
         if (isset($_POST["username"]) && isset($_POST["password"])) {
             $userName = $_POST["username"];
             $password = $_POST["password"];

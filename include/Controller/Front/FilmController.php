@@ -20,6 +20,8 @@ class FilmController extends AbstractController
             $FilmRepo = new \FilmRepository();
             $film = $FilmRepo->getByFilmID($filmID);
             $filmRelatives = $FilmRepo->getByGenreOfFilm($film);
+        } else {
+            echo "Film ID is not set. Please provide a valid film ID.";
         }
 
 
