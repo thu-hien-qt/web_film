@@ -1,4 +1,8 @@
 <?php
+namespace App\Repository;
+
+use App\Model\Film;
+use App\MyPDO;
 
 class FilmRepository
 {
@@ -20,7 +24,7 @@ class FilmRepository
         $row = $stmt->fetchObject();
 
         if (!$row) {
-            throw new Exception("Film $filmID is not found");
+            throw new \Exception("Film $filmID is not found");
         }
 
         $film = new Film($row);

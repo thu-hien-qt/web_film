@@ -1,12 +1,15 @@
 <?php
 
-namespace Controller\Admin;
+namespace App\Controller\Admin;
+
+use App\Model\Genre;
+use App\Repository\GenreRepository;
 
 class GenreController extends AdminController
 {
     public function view()
     {
-        $GenreRepo = new \GenreRepository();
+        $GenreRepo = new \App\Repository\GenreRepository();
         $genres = $GenreRepo->getAll();
 
         require_once '../template/admin/genre.phtml';
@@ -15,10 +18,12 @@ class GenreController extends AdminController
     public function add()
     {
         if (isset($_POST['submit']) && isset($_POST['genre'])) {
-            $genre = new \Genre();
+            $genre = new Genre();
             $genre->setName($_POST['genre']);
-            $GenreRepo = new \GenreRepository();
+
+            $GenreRepo = new GenreRepository();
             $GenreRepo->insert($genre);
+            
             $name = $genre->getName();
             header("location: index.php?controller=admin.genre&action=view&add=$name");
         }
@@ -28,7 +33,7 @@ class GenreController extends AdminController
 
     public function edit()
     {
-        $genreRepo = new \GenreRepository();
+        $genreRepo = new GenreRepository();
         if (isset($_GET["genreID"])) {
             $genreID = $_GET["genreID"];
             $genre = $genreRepo->getById($genreID);
@@ -49,7 +54,7 @@ class GenreController extends AdminController
         if (isset($_GET["genreID"])) {
 
             if (isset($_POST["submit"])) {
-                $GenreRepo = new \GenreRepository();
+                $GenreRepo = new GenreRepository();
                 $genre = $GenreRepo->getById($_GET["genreID"]);
                 $genreName = $genre->getName();
                 if ($_POST["submit"] == 1) {

@@ -1,5 +1,9 @@
 <?php
- 
+namespace App\Repository;
+
+use App\Model\Film;
+use App\Model\Genre;
+use App\MyPDO;
 
 class GenreRepository
 {
@@ -29,7 +33,7 @@ class GenreRepository
         $row = $statment->fetchObject();
 
         if (empty($row)) {
-            throw new Exception("Genre $id not found");
+            throw new \Exception("Genre $id not found");
         }
 
         $genre = new Genre();

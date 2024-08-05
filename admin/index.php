@@ -1,8 +1,11 @@
-<?php 
+<?php
 require_once "../include/inc.php";
 session_start();
 
-$kernel = new \Kernel\Kernel();
+use App\Kernel\Kernel;
+
+
+$kernel = new Kernel;
 $kernel->run('admin');
 
 ?>

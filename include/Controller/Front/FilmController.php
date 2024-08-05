@@ -3,13 +3,15 @@
 namespace App\Controller\Front;
 
 use App\Controller\AbstractController;
+use App\Repository\FilmRepository;
+use App\Repository\GenreRepository;
 
 class FilmController extends AbstractController
 {
     public function view()
     {
 
-        $GenreRepo = new \GenreRepository();
+        $GenreRepo = new GenreRepository();
         $genres = $GenreRepo->getAll();
 
         $filmID = (isset($_GET["id"])) ? $_GET["id"] : null;
@@ -17,7 +19,7 @@ class FilmController extends AbstractController
         // todo : show error when $filmID is missing
 
         if ($filmID) {
-            $FilmRepo = new \FilmRepository();
+            $FilmRepo = new FilmRepository();
             $film = $FilmRepo->getByFilmID($filmID);
             $filmRelatives = $FilmRepo->getByGenreOfFilm($film);
         } else {
@@ -50,12 +52,12 @@ class FilmController extends AbstractController
 
     public function category()
     {
-        $GenreRepo = new \GenreRepository();
+        $GenreRepo = new GenreRepository();
         $genres = $GenreRepo->getAll();
 
         if (isset($_GET['id'])) {
             $genreID = $_GET['id'];
-            $FilmRepo = new \FilmRepository();
+            $FilmRepo = new FilmRepository();
             $films = $FilmRepo->getByGenreID($genreID);
         } else {
             echo "GenreID is not found";

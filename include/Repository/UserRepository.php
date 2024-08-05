@@ -1,4 +1,8 @@
 <?php
+namespace App\Repository;
+
+use App\Model\User;
+use App\MyPDO;
 
 class UserRepository
 {

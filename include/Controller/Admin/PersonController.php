@@ -1,14 +1,15 @@
 <?php
 
-namespace Controller\Admin;
+namespace App\Controller\Admin;
 
-use Error;
+use App\Model\Person;
+use App\Repository\PersonRepository;
 
 class PersonController extends AdminController
 {
     public function view()
     {
-        $PersonRepo = new \PersonRepository();
+        $PersonRepo = new PersonRepository();
         $people = $PersonRepo->getAll();
 
         require_once '../template/admin/person.phtml';
@@ -20,12 +21,12 @@ class PersonController extends AdminController
             isset($_POST['submit']) && isset($_POST['name']) && isset($_POST['gender'])
             && isset($_POST['birthday']) && isset($_POST['role'])
         ) {
-            $person = new \Person();
+            $person = new Person();
             $person->setName($_POST['name']);
             $person->setGender($_POST['gender']);
             $person->setBirthday($_POST['birthday']);
             $person->setRole($_POST['role']);
-            $personRepo = new \PersonRepository();
+            $personRepo = new PersonRepository();
             $personRepo->insert($person);
             $name = $person->getName();
             header("location: index.php?controller=admin.person&action=view&add=$name");
@@ -37,7 +38,7 @@ class PersonController extends AdminController
     {
         if (isset($_GET["personID"])) {
             $personID = $_GET["personID"];
-            $personRepo = new \PersonRepository();
+            $personRepo = new PersonRepository();
             $person = $personRepo->getPersonById($personID);
             if (
                 isset($_POST['submit']) && isset($_POST['name']) && isset($_POST['gender'])
@@ -68,7 +69,7 @@ class PersonController extends AdminController
         if (isset($_POST["rep"])) {
             if (isset($_GET["personID"]) && $_POST["rep"] == 1) {
         
-                $PersonRepo = new \PersonRepository();
+                $PersonRepo = new PersonRepository();
                 $person = $PersonRepo->getPersonById($_GET['personID']);
                 $name = $person->getName();
                 $PersonRepo->delete($person);

@@ -1,6 +1,8 @@
 <?php
 
-namespace Controller\Admin;
+namespace App\Controller\Admin;
+
+use App\Repository\UserRepository;
 
 class LoginController extends AdminController
 {
@@ -13,7 +15,7 @@ class LoginController extends AdminController
         if (isset($_POST["username"]) && isset($_POST["password"])) {
             $userName = $_POST["username"];
             $password = $_POST["password"];
-            $userRepo = new \UserRepository();
+            $userRepo = new UserRepository();
             $user = $userRepo->getUser($userName, $password);
 
             if (empty($user)) {

@@ -1,14 +1,14 @@
 <?php
 
-namespace Controller\Admin;
+namespace App\Controller\Admin;
 
-use UserRepositoty;
+use App\Repository\UserRepository;
 
 class UserController extends AdminController
 {
     public function view()
     {
-        $UserRepo = new \UserRepository();
+        $UserRepo = new UserRepository();
         $users = $UserRepo->getAll();
 
         require_once '../template/admin/user.phtml';

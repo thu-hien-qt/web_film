@@ -1,4 +1,9 @@
 <?php
+namespace App\Repository;
+
+use App\Model\Film;
+use App\Model\Person;
+use App\MyPDO;
 
 class PersonRepository 
 {
@@ -55,7 +60,7 @@ class PersonRepository
         $row = $stmt->fetchObject();
 
         if (empty($row)) {
-            throw new Exception("Person $personID not found");
+            throw new \Exception("Person $personID not found");
         }
 
         $person = new Person($row);

@@ -1,12 +1,11 @@
 <?php
-
+namespace App;
 require_once "pdo.php";
 
 spl_autoload_register(function ($className) {
     $base_dir = realpath(dirname(__FILE__));
-    echo $className;
-    $filepath = "xxx";
-
+    $filepath = $base_dir.str_replace("App","",$className);
+    $filepath = str_replace(["App","\""], DIRECTORY_SEPARATOR, $filepath ).".php";
     /* todo : find the file path from the class name :
     - if classname doesn't contains "App\" => return
     - remove "App\"
@@ -15,7 +14,9 @@ spl_autoload_register(function ($className) {
     */
 
     if (file_exists($filepath)) {
-        require_once $filepath;
+        require_once "$filepath";
+    } else {
+        echo "File is not found";
     }
 });
 

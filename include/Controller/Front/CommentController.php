@@ -1,15 +1,17 @@
 <?php
 
-namespace Controller\Front;
+namespace App\Controller\Front;
 
-use Controller\AbstractController;
+use App\Controller\AbstractController;
+use App\Model\Comment;
+use App\Repository\CommentRepository;
 
 class CommentController extends AbstractController
 {
     public function getComment()
     {
         require 'C:\xampp\htdocs\test\phim\include\inc.php';
-        $commentRepo = new \CommentRepository();
+        $commentRepo = new CommentRepository();
         $comments = $commentRepo->getAll();
         $commentsArray = [];
         foreach ($comments as $comment) {
@@ -26,12 +28,12 @@ class CommentController extends AbstractController
 
     public function postComment()
     {
-        $commentRepo = new \CommentRepository();
+        $commentRepo = new CommentRepository();
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $filmID = $_POST['filmID'];
             $commentText = $_POST['comment'];
-            $cmt = new \Comment();
+            $cmt = new Comment();
             $cmt->setFilmID($filmID);
             $cmt->setComment($commentText);
             $datetime = new \DateTime();

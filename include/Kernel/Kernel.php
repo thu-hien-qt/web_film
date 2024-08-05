@@ -1,7 +1,6 @@
 <?php
 
-namespace Kernel;
-
+namespace App\Kernel;
 
 class Kernel
 {

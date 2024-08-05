@@ -1,6 +1,6 @@
 <?php
 
-namespace Kernel;
+namespace App\Kernel;
 
 class Router
 {
@@ -9,108 +9,108 @@ class Router
         $mapping = [
             "front.home" => [
                 "index" => [
-                    "class" => \Controller\Front\HomeController::class,
+                    "class" => \App\Controller\Front\HomeController::class,
                     "method" => "index"
                 ]
             ],
             "front.film" => [
                 "view" => [
-                    "class" => \Controller\Front\FilmController::class,
+                    "class" => \App\Controller\Front\FilmController::class,
                     "method" => "view"
                 ],
                 "listByCategory" => [
-                    "class" => \Controller\Front\FilmController::class,
+                    "class" => \App\Controller\Front\FilmController::class,
                     "method" => "category"
                 ]
             ],
             "front.comment" => [
                 "get" => [
-                    "class" => \Controller\Front\CommentController::class,
+                    "class" => \App\Controller\Front\CommentController::class,
                     "method" => "getComment"
                 ],
                 "post" => [
-                    "class" => \Controller\Front\CommentController::class,
+                    "class" => \App\Controller\Front\CommentController::class,
                     "method" => "postComment"
                 ]
                 ],
 
             "admin.home" => [
                 "index" => [
-                    "class" => \Controller\Admin\HomeController::class,
+                    "class" => \App\Controller\Admin\HomeController::class,
                     "method" => "index"
                 ],
             ],
             "admin.login" => [
                 "login" => [
-                    "class" => \Controller\Admin\LoginController::class,
+                    "class" => \App\Controller\Admin\LoginController::class,
                     "method" => "login"
                 ]
             ],
             "admin.film" => [
                 "edit" => [
-                    "class" => \Controller\Admin\FilmController::class,
+                    "class" => \App\Controller\Admin\FilmController::class,
                     "method" => "edit"
                 ],
                 "delete" => [
-                    "class" => \Controller\Admin\FilmController::class,
+                    "class" => \App\Controller\Admin\FilmController::class,
                     "method" => "delete"
                 ],
                 "add" => [
-                    "class" => \Controller\Admin\FilmController::class,
+                    "class" => \App\Controller\Admin\FilmController::class,
                     "method" => "add"
                 ]
             ],
             "admin.person" => [
                 "view" => [
-                    "class" => \Controller\Admin\PersonController::class,
+                    "class" => \App\Controller\Admin\PersonController::class,
                     "method" => "view"
                 ],
                 "edit" => [
-                    "class" => \Controller\Admin\PersonController::class,
+                    "class" => \App\Controller\Admin\PersonController::class,
                     "method" => "edit"
                 ],
                 "add" => [
-                    "class" => \Controller\Admin\PersonController::class,
+                    "class" => \App\Controller\Admin\PersonController::class,
                     "method" => "add"
                 ],
                 "delete" => [
-                    "class" => \Controller\Admin\PersonController::class,
+                    "class" => \App\Controller\Admin\PersonController::class,
                     "method" => "delete"
                 ]
             ],
             "admin.genre" => [
                 "view" => [
-                    "class" => \Controller\Admin\GenreController::class,
+                    "class" => \App\Controller\Admin\GenreController::class,
                     "method" => "view"
                 ],
                 "edit" => [
-                    "class" => \Controller\Admin\GenreController::class,
+                    "class" => \App\Controller\Admin\GenreController::class,
                     "method" => "edit"
                 ],
                 "add" => [
-                    "class" => \Controller\Admin\GenreController::class,
+                    "class" => \App\Controller\Admin\GenreController::class,
                     "method" => "add"
                 ],
                 "delete" => [
-                    "class" => \Controller\Admin\GenreController::class,
+                    "class" => \App\Controller\Admin\GenreController::class,
                     "method" => "delete"
                 ]
             ],
             "admin.user" => [
                 "view" => [
-                    "class" => \Controller\Admin\UserController::class,
+                    "class" => \App\Controller\Admin\UserController::class,
                     "method" => "view"
                 ],
                 "edit" => [
-                    "class" => \Controller\Admin\UserController::class,
+                    "class" => \App\Controller\Admin\UserController::class,
                     "method" => "edit"
                 ],
                 "add" => [
-                    "class" => \Controller\Admin\UserController::class,
+                    "class" => \App\Controller\Admin\UserController::class,
                     "method" => "add"
                 ],
                 "delete" => [
-                    "class" => \Controller\Admin\UserController::class,
+                    "class" => \App\Controller\Admin\UserController::class,
                     "method" => "delete"
                 ]
             ],

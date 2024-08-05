@@ -1,9 +1,9 @@
 <?php
 
-namespace Controller\Admin;
+namespace App\Controller\Admin;
 
-use Controller\AbstractController;
-use Kernel\Router;
+use App\Controller\AbstractController;
+use App\Kernel\Router;
 
 abstract class AdminController extends AbstractController
 {

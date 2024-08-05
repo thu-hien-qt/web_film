@@ -1,6 +1,8 @@
 <?php
 
-namespace Controller\Admin;
+namespace App\Controller\Admin;
+
+use App\Repository;
 
 class FilmController extends AdminController
 {
@@ -9,19 +11,19 @@ class FilmController extends AdminController
     }
 
     public function edit() {
-        $GenreRepo = new \GenreRepository();
+        $GenreRepo = new \App\Repository\GenreRepository;
         $genres = $GenreRepo->getAll();
         
-        $getFilm = new \FilmRepository();
+        $getFilm = new \App\Repository\FilmRepository();
         $films = $getFilm->getAll();
         
-        $PersonRepo = new \PersonRepository();
+        $PersonRepo = new \App\Repository\PersonRepository();
         $actors = $PersonRepo->getActors();
         $directors = $PersonRepo->getDirectors();
         
         if (isset($_GET["id"])) {
             $filmID = $_GET["id"];
-            $FilmRepo = new \FilmRepository();
+            $FilmRepo = new \App\Repository\FilmRepository();
             $film = $FilmRepo->getByFilmID($filmID);
         }
         
@@ -56,7 +58,7 @@ class FilmController extends AdminController
                     $genre = $GenreRepo->getById($genreID);
                     $film->addGenre($genre);
                 }
-                $FilmRepo = new \FilmRepository();
+                $FilmRepo = new \App\Repository\FilmRepository();
                 $FilmRepo->Update($film);
                 $_SESSION["update"] = $film->getTitle(). " updated";
                 header("location: index.php");
@@ -69,10 +71,10 @@ class FilmController extends AdminController
     }
 
     public function add() {
-        $GenreRepo = new \GenreRepository();
+        $GenreRepo = new \App\Repository\GenreRepository();
         $genres = $GenreRepo->getAll();
         
-        $PersonRepo = new \PersonRepository();
+        $PersonRepo = new \App\Repository\PersonRepository();
         $actors = $PersonRepo->getActors();
         $directors = $PersonRepo->getDirectors();
         
@@ -86,7 +88,7 @@ class FilmController extends AdminController
             ) {
                 $error = "Please complete all information.";
             } else {
-                $film = new \Film();
+                $film = new \App\Model\Film();
                 $film->setTitle($_POST["title"]);
                 $film->setManufacture($_POST["manufacture"]);
                 $film->setLink($_POST["link"]);
@@ -106,7 +108,7 @@ class FilmController extends AdminController
                     $film->addGenre($genre);
                 }
         
-                $FilmRepo = new \FilmRepository();
+                $FilmRepo = new \App\Repository\FilmRepository();
                 $FilmRepo->insert($film);
         
                 header('location: index.php');
@@ -118,7 +120,7 @@ class FilmController extends AdminController
     }
 
     public function delete() {
-        $GenreRepo = new \GenreRepository();
+        $GenreRepo = new \App\Repository\GenreRepository();
         $genres = $GenreRepo->getAll();
         
         if (isset($_POST["no"])) {
@@ -129,7 +131,7 @@ class FilmController extends AdminController
         if (isset($_POST["yes"]) && isset($_GET['id'])) 
         {
             $filmID = $_GET['id'];
-            $FilmRepo = new \FilmRepository();
+            $FilmRepo = new \App\Repository\FilmRepository();
             $film = $FilmRepo->getByFilmID($filmID);
             $FilmRepo->Delete($film);
             $_SESSION["delete"] = $film->getTitle(). " deleted";
