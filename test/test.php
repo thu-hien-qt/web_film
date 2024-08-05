@@ -1,96 +1,11 @@
 <?php
 
-include "../include/inc.php";
+use App\Kernel\Kernel;
+use App\Kernel\Router;
+use App\Model\Film;
 
-// $gerneRepo = new GenreRepository();
+require_once "../include/inc.php";
 
-// // show list
-// $list = $gerneRepo->getAll();
-// foreach ($list as $genre) {
-//     echo $genre->getName() . PHP_EOL;
-// }
-
-// print_r($list);
-
-// // add a genre
-// $genre = new Genre();
-// $genre->setName("new genre");
-// $gerneRepo->insert($genre);
-
-// //get by id
-// $genre = $gerneRepo->getById(6);
-// $genre->setName("Horror");
-// $gerneRepo->update($genre);
-
-// $genre = $gerneRepo->getById(9);
-// $gerneRepo->delete($genre);
-
-// $PersonRepo = new PersonRepository;
-
-// $actors = $PersonRepo->getActor();
-// foreach ($actors as $actor)
-// {
-//     echo $actor->getName() . PHP_EOL;
-// }
-
-// $directors = $PersonRepo->getDirector();
-// foreach ($directors as $director)
-// {
-//     echo $director->getName() . PHP_EOL;
-// }
-
-// // $actor = new Person();
-// // $actor->setName("Rio");
-// // $actor->setGender("male");
-// // $actor->setBirthday(1999);
-// // $actor->setRole("actor");
-// // $PersonRepo->insert($actor);
-
-// $Rio = $PersonRepo->getPersonById(15);
-// $PersonRepo->delete($Rio);
-
-// $FIlmRepo = new FilmRespository();
-// $film = $FIlmRepo->getByFilmID(21);
-// print_r($film);
-
-// $film = $FIlmRepo->getByFilmID(21);
-// $films = $FIlmRepo->getByFilm($film);
-// print_r($films);
-
-// $films = $FIlmRepo->getAll();
-// print_r($films);
-// $PersonRepo = new PersonRepository;
-// $director = $PersonRepo->getPersonById(1);
-// $actor1 = $PersonRepo->getPersonById(2);
-// $actor2 = $PersonRepo->getPersonById(3);
-// $gerneRepo = new GenreRepository;
-// $genre1 = $gerneRepo->getById(1);
-// $genre2 = $gerneRepo->getById(2);
-// $film = new film;
-// $film->setTitle("abc");
-// $film->setManufacture(1909);
-// $film->addActors($actor1);
-// $film->addActors($actor2);
-// $film->addGenres($genre1);
-// $film->addGenres($genre2);
-// $film->addDirector($director);
-// $film->setLink("http:...");
-// $film->setImg("http:.img");
-// $film->setDescription("abc123");
-// $FIlmRepo->Insert($film);
-
-// $film = $FIlmRepo->getByFilmID(26);
-// $PersonRepo = new PersonRepository;
-// $actor1 = $PersonRepo->getPersonById(2);
-// $actor2 = $PersonRepo->getPersonById(3);
-// $film->addActor($actor1);
-// $film->addActor($actor2);
-// $film->removeAllActor();
-// print_r($film);
-
-$gerneRepo = new GenreRepository;
-// $genre = new Genre;
-$genre = $gerneRepo->getById(10);
-// $genre->setName("haha");
-// echo $gerneRepo->insert($genre);
-$gerneRepo->delete($genre);
+$film = new Film();
+$router = new Router();
+$kernel = new Kernel();

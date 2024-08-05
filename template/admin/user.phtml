@@ -1,0 +1,73 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="..\asset\admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+    <div class="active">
+        <div class="hd">
+            <div class="icon">
+                <a href="index.php"><img class="icon" src="https://w7.pngwing.com/pngs/130/1021/png-transparent-movie-logo-movie-logo-film-tape-cinema.png" alt=""></a>
+            </div>
+
+            <div>
+                <div class="user">
+                    <?php
+                    if (isset($_SESSION["name"])) {
+                        echo '<span class= "name">' . $_SESSION["name"] . '</span>';
+                        echo '<a href="../index.php"><span class ="log">Log out</span></a>';
+                    } else {
+                        echo '<a href="../log.php"><span class = "log">Log in</span></a>';
+                    } ?>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="home_page">
+            <div class="main">
+                <a href="index.php">Trang chủ</a>
+            </div>
+            <div class="main"><a href="index.php?controller=admin.genre&action=view">Genre</a></div>
+            <div class="main"><a href="index.php?controller=admin.person&action=view">Person</a></div>
+            <div class="main"><a href="index.php?controller=admin.user&action=viewr">User</a></div>
+
+            <a href="<?php echo '../admin/.php'?>"><button class="add" type="submit">Add</button></a>
+            <div class="clear"></div>
+        </div>
+        <div>
+            <?php if (isset($_SESSION["update"])) {
+                echo $_SESSION["update"];
+                unset($_SESSION["update"]);
+            }
+            if (isset($_SESSION["delete"])) {
+                echo $_SESSION["delete"];
+                unset($_SESSION["delete"]);
+            }
+            ?>
+        </div>
+        <div class="films">
+            <?php
+                echo '<table><tr><th>UserID</th><th>Name</th><th>User Name</th><th></th></tr>';
+                foreach ($users as $user) {
+                    echo '<tr><td>' . $user->getUserID() . '</td><td>';
+                    echo $user->getName() . '</td><td>';
+                    echo $user->getUserName() . '</td><td>';
+                    echo ('<a href="..\admin\user\update_user.php?userID=' . $user->getUserID(). '"><button class="button" type="submit">Update</button></a>');
+                    echo ('<a href="..\admin\user\delete_user.php?userID=' . $user->getUserID(). '"><button class="button" type="submit">Delete</button></a>');
+                    echo '</td></tr>';
+                }
+                echo '</table>';
+            ?>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+</body>
+
+</html>

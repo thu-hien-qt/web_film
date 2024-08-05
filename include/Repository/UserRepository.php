@@ -1,6 +1,10 @@
 <?php
+namespace App\Repository;
 
-class UserReposiroty
+use App\Model\User;
+use App\MyPDO;
+
+class UserRepository
 {
     public function getUser($userName, $password)
     {

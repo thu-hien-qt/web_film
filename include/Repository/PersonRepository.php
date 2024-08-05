@@ -1,4 +1,9 @@
 <?php
+namespace App\Repository;
+
+use App\Model\Film;
+use App\Model\Person;
+use App\MyPDO;
 
 class PersonRepository 
 {
@@ -55,7 +60,7 @@ class PersonRepository
         $row = $stmt->fetchObject();
 
         if (empty($row)) {
-            throw new Exception("Person $personID not found");
+            throw new \Exception("Person $personID not found");
         }
 
         $person = new Person($row);
@@ -106,13 +111,14 @@ class PersonRepository
     public function update(Person $person)
     {
         $pdo = MyPDO::getInstance();
-        $query = 'UPDATE person SET name = :name, gender = :gender, birthday = :birthday, role = :role';
+        $query = 'UPDATE person SET name = :name, gender = :gender, birthday = :birthday, role = :role WHERE personID = :personID';
         $stmt = $pdo->prepare($query);
         $stmt->execute([
             ':name'=>$person->getName(),
             ':gender'=> $person->getGender(),
             ':birthday'=>$person->getBirthday(),
-            ':role'=>$person->getRole()
+            ':role'=>$person->getRole(),
+            ':personID' => $person->getPersonID()
         ]);
     }
 

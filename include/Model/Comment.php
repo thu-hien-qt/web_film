@@ -1,4 +1,6 @@
 <?php 
+namespace App\Model;
+
 class Comment {
     private $ID;
     private $filmID;

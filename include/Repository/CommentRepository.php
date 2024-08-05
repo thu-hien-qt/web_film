@@ -1,4 +1,8 @@
 <?php
+namespace App\Repository;
+
+use App\Model\Comment;
+use App\MyPDO;
 
 class CommentRepository
 {
@@ -10,7 +14,7 @@ class CommentRepository
         $cmts = [];
         while ($row = $stmt->fetchObject())
         {
-            $cmt = new Comment;
+            $cmt = new Comment();
             $cmt->setID($row->ID);
             $cmt->setFilmID($row->filmID);
             $cmt->setComment($row->comment);
@@ -29,7 +33,7 @@ class CommentRepository
         $cmts = [];
         while ($row = $stmt->fetchObject())
         {
-            $cmt = new Comment;
+            $cmt = new Comment();
             $cmt->setID($row->ID);
             $cmt->setFilmID($row->filmID);
             $cmt->setComment($row->comment);
