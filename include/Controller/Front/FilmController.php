@@ -1,8 +1,8 @@
 <?php
 
-namespace Controller\Front;
+namespace App\Controller\Front;
 
-use Controller\AbstractController;
+use App\Controller\AbstractController;
 
 class FilmController extends AbstractController
 {
