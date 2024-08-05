@@ -37,7 +37,7 @@
             <?php
             foreach ($genres as $genre) {
                 echo ('<div class="genres">');
-                echo ('<a href="index.php?controller=front.film&action=category&id='.$genre->getGenreID() .'">'. $genre->getName() . '</a>');
+                echo ('<a href="index.php?controller=front.film&action=listByCategory&id='.$genre->getGenreID() .'">'. $genre->getName() . '</a>');
                 echo ("</div>\n");
             }
 

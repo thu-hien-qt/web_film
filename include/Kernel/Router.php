@@ -18,11 +18,21 @@ class Router
                     "class" => \Controller\Front\FilmController::class,
                     "method" => "view"
                 ],
-                "category" => [
+                "listByCategory" => [
                     "class" => \Controller\Front\FilmController::class,
                     "method" => "category"
                 ]
             ],
+            "front.comment" => [
+                "get" => [
+                    "class" => \Controller\Front\CommentController::class,
+                    "method" => "getComment"
+                ],
+                "post" => [
+                    "class" => \Controller\Front\CommentController::class,
+                    "method" => "postComment"
+                ]
+                ],
 
             "admin.home" => [
                 "index" => [
@@ -104,6 +114,7 @@ class Router
                     "method" => "delete"
                 ]
             ],
+
         ];
 
         // todo : error when $controller or $action is empty

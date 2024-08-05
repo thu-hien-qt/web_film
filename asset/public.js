@@ -1,9 +1,12 @@
 
 function load3Comments() {
-    $.getJSON('../phim/admin/comment/get_comment.php', function (rows) {
+    $.getJSON('index.php?controller=front.comment&action=get', function (rows) {
+        
         $('#comments-section').empty();
         for (let i = 0; i < 3; i++) {
             let row = rows[i];
+            console.log(row);
+            console.log(row.datetime);
             $('#comments-section').append(
                 `<div class="user_comment">
                     <img src="http:#" alt="img" class="user_icon">
@@ -21,10 +24,11 @@ function load3Comments() {
     })
 
 
+
 }
 
 function loadComments() {
-    $.getJSON('../phim/admin/comment/get_comment.php', function (rows) {
+    $.getJSON('index.php?controller=front.comment&action=get', function (rows) {
         $('#comments-section').empty();
         for (let i = 0; i < rows.length; i++) {
             let row = rows[i];
@@ -49,7 +53,7 @@ function loadComments() {
 
 $(document).ready(function () {
     load3Comments();
-
+    console.log("load1")
     $('#comment-form').submit(function (event) {
         event.preventDefault();
         postComment();
@@ -67,11 +71,9 @@ $(document).ready(function () {
 
 function postComment() {
     let filmID = $('#filmID').val();
-    console.log(filmID);
     let comment = $('#comment-text').val();
-    console.log(comment);
     $.ajax({
-        url: '../phim/admin/comment/post_comment.php',
+        url: 'index.php?controller=front.comment&action=post',
         type: 'POST',
         data: {
             filmID: filmID,
@@ -87,7 +89,6 @@ function postComment() {
             }
         }
     })
-    console.log("23");
 
 }
 

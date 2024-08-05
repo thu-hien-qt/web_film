@@ -57,6 +57,8 @@ class FilmController extends AbstractController
             $genreID = $_GET['id'];
             $FilmRepo = new \FilmRepository();
             $films = $FilmRepo->getByGenreID($genreID);
+        } else {
+            echo "GenreID is not found";
         }
 
         require_once 'template\public\category.phtml';
