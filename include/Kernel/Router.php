@@ -32,7 +32,13 @@ class Router
                     "class" => \App\Controller\Front\CommentController::class,
                     "method" => "postComment"
                 ]
-                ],
+            ],
+            "front.SignUp" => [
+                "signUp" => [
+                    "class" => \App\Controller\Front\SignUpController::class,
+                     "method" => "signUp"
+                ]
+            ],
 
             "admin.home" => [
                 "index" => [

@@ -15,6 +15,7 @@ class UserController extends AdminController
     }
     public function add()
     {
+        
     }
 
     public function edit()
