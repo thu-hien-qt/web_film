@@ -5,7 +5,7 @@ require_once "pdo.php";
 spl_autoload_register(function ($className) {
     $base_dir = realpath(dirname(__FILE__));
     $filepath = $base_dir.str_replace("App","",$className);
-    $filepath = str_replace(["App","\""], DIRECTORY_SEPARATOR, $filepath ).".php";
+    $filepath = str_replace("\\", DIRECTORY_SEPARATOR, $filepath ).".php";
     /* todo : find the file path from the class name :
     - if classname doesn't contains "App\" => return
     - remove "App\"
