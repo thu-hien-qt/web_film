@@ -1,6 +1,5 @@
 <?php
 namespace App;
-require_once "pdo.php";
 
 // spl_autoload_register(function ($className) {
 //     $base_dir = realpath(dirname(__FILE__));
