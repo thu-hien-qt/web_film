@@ -1,18 +1,14 @@
 <?php
+namespace App;
 
-require_once "pdo.php";
-
-foreach (glob(__DIR__."/Model/*.php") as $file) {
-    require_once $file;
-}
-
-foreach (glob(__DIR__."/Model/*.php") as $file) {
-    require_once $file;
-}
-
-$repos = glob(__DIR__."/Repository/*.php");
-foreach ($repos as $file) {
-    require_once $file;
-}
-
-// require_once " ../include/Repository/GenreRepository.php";
+// spl_autoload_register(function ($className) {
+//     $base_dir = realpath(dirname(__FILE__));
+//     $filepath = $base_dir.str_replace("App","",$className);
+//     $filepath = str_replace("\\", DIRECTORY_SEPARATOR, $filepath ).".php";
+//     if (file_exists($filepath)) {
+//         require_once "$filepath";
+//     } else {
+//         echo "File is not found";
+//     }
+// });
+include __DIR__.'/../vendor/autoload.php';

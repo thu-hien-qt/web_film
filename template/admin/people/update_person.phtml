@@ -1,0 +1,47 @@
+<form method="post">
+    <p>Update </p>
+    <p>Name:<input type="text" name="name" value="<?php if ($person->getName() != null) {
+                                                        echo $person->getName();
+                                                    } else {
+                                                        echo "";
+                                                    }
+                                                    ?>"></p>
+    <p>Gender:
+        <select name="gender" id="gender">
+            <option value="male" <?php if ($person->getGender() == "male") {
+                                        echo "selected";
+                                    } else {
+                                        echo "";
+                                    }
+                                    ?>>Male</option>
+            <option value="female" <?php if ($person->getGender() == "female") {
+                                        echo "selected";
+                                    } else {
+                                        echo "";
+                                    }
+                                    ?>>Female</option>
+        </select>
+    </p>
+    <p>Birthday: <input type="year" name="birthday" value="<?php if ($person->getBirthday() != null) {
+                                                                echo $person->getBirthday();
+                                                            } else {
+                                                                echo "";
+                                                            } ?>"></p>
+    <p>Role:
+        <select name="role">
+            <option value="actor" <?php if ($person->getRole() == "actor") {
+                                        echo "selected";
+                                    } else {
+                                        echo "";
+                                    }
+                                    ?>>Actor</option>
+            <option value="director" <?php if ($person->getRole() == "director") {
+                                        echo "selected";
+                                    } else {
+                                        echo "";
+                                    }
+                                    ?>>Director</option>
+        </select>
+    </p>
+    <input type="submit" name=submit>
+</form>

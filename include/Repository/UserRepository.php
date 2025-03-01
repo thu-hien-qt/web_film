@@ -1,6 +1,10 @@
 <?php
+namespace App\Repository;
 
-class UserReposiroty
+use App\Model\User;
+use App\MyPDO;
+
+class UserRepository
 {
     public function getUser($userName, $password)
     {
@@ -60,6 +64,30 @@ class UserReposiroty
         $user->setUserName($row->username);
         $user->setPassword($row->password);
         return $user;
+    }
+
+    public function insert(User $user)
+    {
+        $pdo = MyPDO::getInstance();
+        $query = 'INSERT INTO users (name, username, password) VALUES (:name, :username, :password) ';
+        $stmt = $pdo->prepare($query);
+        $stmt->execute([
+            ':name'=>$user->getName(),
+            ':username'=> $user->getUserName(),
+            ':password'=>$user->getPassword()
+        ]);
+    }
+
+    public function update(User $user)
+    {
+        $pdo = MyPDO::getInstance();
+        $query = 'UPDATE person SET name = :name, username = :username, passsword = :password WHERE userID = :userID';
+        $stmt = $pdo->prepare($query);
+        $stmt->execute([
+            ':name'=>$user->getName(),
+            ':username'=> $user->getUserName(),
+            ':password'=>$user->getPassword()
+        ]);
     }
 
     public function delete(User $user)

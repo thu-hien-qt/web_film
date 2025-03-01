@@ -89,7 +89,7 @@
             <?php
             foreach ($genres as $genre) {
                 echo ('<div class="genres">');
-                echo ('<a href="category.php?id=' . $genre->getGenreID() . '">' . $genre->getName() . '</a>');
+                echo ('<a href="index.php?controller=front.film&action=listByCategory&id=' . $genre->getGenreID() . '">' . $genre->getName() . '</a>');
                 echo ("</div>\n");
             }
 
@@ -141,6 +141,7 @@
             </div>
             <div id="comments-section"></div>
             <script src="../phim/asset/public.js"></script>
+            <div id="endComment"></div>
             <div class="clear"></div>
         </div>
         <div class="relative">
